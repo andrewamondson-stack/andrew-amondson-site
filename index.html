@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Amondson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --warm-white: rgba(250, 245, 235, 0.96);
+    --scrim-top: rgba(28,20,12,0.45);
+    --scrim-bottom: rgba(28,20,12,0.32);
+    --paper: #f6f3ec;
+    --ink: #1c1914;
+    --ink-soft: rgba(28,25,20,0.68);
+    --dark: #14120e;
+    --vh: 1vh; /* overridden by JS below for browsers with unreliable svh support */
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #0a0a09;
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: calc(var(--vh) * 100);
+    overflow: hidden;
+  }
+
+  .hero video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      var(--scrim-top) 0%,
+      transparent 22%,
+      transparent 68%,
+      var(--scrim-bottom) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(32,24,14,0.34) 0%,
+      rgba(32,24,14,0.14) 40%,
+      transparent 64%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  nav {
+    position: absolute;
+    top: clamp(20px, 3vw, 40px);
+    right: clamp(20px, 4vw, 56px);
+    display: flex;
+    gap: clamp(18px, 2.2vw, 32px);
+    z-index: 2;
+  }
+
+  nav a {
+    color: rgba(250,245,235,0.82);
+    text-decoration: none;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  nav a:hover {
+    color: var(--warm-white);
+  }
+
+  .wordmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    margin: 0;
+    color: var(--warm-white);
+    font-weight: 300;
+    font-size: clamp(30px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(20px, 3vw, 32px);
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 22px;
+    height: 34px;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .scroll-cue::after {
+    content: "";
+    width: 3px;
+    height: 7px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.9);
+    animation: scrollDown 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0%   { transform: translateY(0); opacity: 1; }
+    70%  { transform: translateY(9px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue::after { animation: none; opacity: 0.9; }
+  }
+
+  @media (max-width: 560px) {
+    nav { gap: 16px; }
+    .wordmark {
+      font-size: clamp(28px, 8.4vw, 40px);
+      white-space: normal;
+      width: 90vw;
+    }
+  }
+
+  /* ---------- Quote ---------- */
+  .quote {
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(64px, 12vh, 120px) clamp(24px, 8vw, 80px);
+  }
+
+  .quote blockquote {
+    margin: 0;
+    max-width: 780px;
+    text-align: center;
+    font-weight: 300;
+    font-size: clamp(22px, 3.4vw, 42px);
+    line-height: 1.35;
+    letter-spacing: 0.002em;
+  }
+
+  .quote cite {
+    display: block;
+    margin-top: 24px;
+    font-style: normal;
+    font-size: clamp(13px, 1vw, 15px);
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Carousel ---------- */
+  .carousel-section {
+    background: var(--dark);
+    padding: 0 0 clamp(20px, 3vh, 32px) 0;
+  }
+
+  .carousel-wrap {
+    width: 100%;
+    margin: 0;
+  }
+
+  .carousel-frame {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    height: calc(var(--vh) * 85);
+    overflow: hidden;
+    background: #000;
+  }
+
+  .carousel-track {
+    display: flex;
+    height: 85vh;
+    height: calc(var(--vh) * 85);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  .carousel-track::-webkit-scrollbar { display: none; }
+
+  .slide {
+    position: relative;
+    flex: 0 0 100%;
+    height: 85vh;
+    height: calc(var(--vh) * 85);
+    scroll-snap-align: start;
+    overflow: hidden;
+  }
+
+  .slide video.fg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .sound-btn {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(20px, 4vh, 40px);
+    transform: translateX(-50%);
+    z-index: 3;
+    background: rgba(20,18,14,0.72);
+    color: var(--warm-white);
+    border: 1px solid rgba(250,245,235,0.4);
+    border-radius: 999px;
+    padding: 9px 20px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+
+  .sound-btn[hidden] { display: none; }
+
+  .post-video-cta {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    color: var(--warm-white);
+    text-decoration: underline;
+    text-decoration-color: rgba(250,245,235,0.45);
+    text-underline-offset: 4px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(14px, 1.3vw, 17px);
+    letter-spacing: 0.02em;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 2.6s ease;
+    pointer-events: none;
+  }
+
+  .post-video-cta.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .post-video-cta:hover {
+    text-decoration-color: var(--warm-white);
+  }
+
+  @media (max-width: 560px) {
+    .post-video-cta { white-space: normal; width: 80%; }
+  }
+
+  /* ---------- Link preview lightbox ---------- */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(10,9,7,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .lightbox-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-overlay[hidden] { display: flex; } /* allow fade-out before unhiding is reversed by JS */
+
+  .lightbox-card {
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 440px;
+    width: 100%;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: 8px;
+    transform: translateY(10px) scale(0.98);
+    transition: transform 0.25s ease;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .lightbox-overlay.visible .lightbox-card {
+    transform: translateY(0) scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--ink-soft, rgba(28,25,20,0.6));
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .lightbox-close:hover { color: var(--ink); }
+
+  .lightbox-domain {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: rgba(28,25,20,0.55);
+    margin-bottom: 10px;
+  }
+
+  .lightbox-title {
+    margin: 0 0 10px 0;
+    font-weight: 400;
+    font-size: 22px;
+  }
+
+  .lightbox-desc {
+    margin: 0 0 22px 0;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(28,25,20,0.75);
+  }
+
+  .lightbox-open {
+    display: inline-block;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: rgba(28,25,20,0.4);
+    text-underline-offset: 3px;
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  .lightbox-open:hover {
+    text-decoration-color: var(--ink);
+  }
+
+  @media (max-width: 560px) {
+    .lightbox-overlay { padding: 20px; }
+  }
+
+  /* ---------- Postcards panel (ported from the real Walking With site) ---------- */
+  #postcardsPanel .pc-card {
+    position: relative;
+    background: #14181A;
+    color: #EDEFE9;
+    max-width: 1100px;
+    width: 100%;
+    height: min(92vh, 900px);
+    border-radius: 8px;
+    overflow: hidden;
+    transform: translateY(10px) scale(0.98);
+    transition: transform 0.25s ease;
+  }
+
+  #postcardsPanel.visible .pc-card {
+    transform: translateY(0) scale(1);
+  }
+
+  #postcardsPanel .pc-scroll {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #postcardsPanel .pc-close {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(18,24,26,0.82);
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    color: #EDEFE9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #postcardsPanel .pc-close:hover { background: #262E2B; }
+
+  #postcardsPanel .pc-content {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #postcardsPanel .pc-content a { color: inherit; }
+
+  #postcardsPanel .pc-header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 32px 40px;
+    border-bottom: 1px solid rgba(237,239,233,0.14);
+  }
+  #postcardsPanel .pc-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    color: #cfeee2;
+    margin: 0 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #postcardsPanel .pc-eyebrow::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: #cfeee2;
+    display: inline-block;
+  }
+  #postcardsPanel .pc-h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(28px, 4.6vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+    max-width: 16ch;
+  }
+  #postcardsPanel .pc-h1 em { font-style: normal; color: #cfeee2; }
+  #postcardsPanel .pc-lede {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 22px;
+    max-width: 800px;
+  }
+  @media (min-width: 760px) {
+    #postcardsPanel .pc-lede { grid-template-columns: 1fr 1fr; }
+  }
+  #postcardsPanel .pc-lede p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: #DDE1D8;
+    margin: 0;
+  }
+  #postcardsPanel .pc-lede p strong { color: #EDEFE9; font-weight: 500; }
+  #postcardsPanel .pc-meta-row {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+  }
+  #postcardsPanel .pc-meta-row div { display: flex; flex-direction: column; gap: 4px; }
+  #postcardsPanel .pc-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    color: #7f8a83;
+  }
+  #postcardsPanel .pc-val { color: #EDEFE9; font-size: 13.5px; }
+
+  #postcardsPanel .pc-hero-map {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 32px 8px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: end;
+  }
+  @media (min-width: 760px) {
+    #postcardsPanel .pc-hero-map { grid-template-columns: 340px 1fr; }
+  }
+  #postcardsPanel .pc-frame {
+    position: relative;
+    border: 1px solid rgba(237,239,233,0.14);
+    background: #1C2321;
+    padding: 8px;
+  }
+  #postcardsPanel .pc-frame img { width: 100%; display: block; filter: saturate(0.92); }
+  #postcardsPanel .pc-cap {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: #8a948d;
+    padding: 8px 4px 2px;
+  }
+  #postcardsPanel .pc-instructions { display: flex; flex-direction: column; gap: 12px; padding-bottom: 12px; }
+  #postcardsPanel .pc-step { display: flex; gap: 12px; align-items: flex-start; }
+  #postcardsPanel .pc-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    color: #14181A;
+    background: #cfeee2;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  #postcardsPanel .pc-step p { margin: 0; font-size: 13.5px; line-height: 1.5; color: #DDE1D8; }
+  #postcardsPanel .pc-step p strong { color: #EDEFE9; font-weight: 500; }
+
+  #postcardsPanel .pc-grid-section { max-width: 860px; margin: 0 auto; padding: 40px 32px 80px; }
+  #postcardsPanel .pc-sec-head {
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid rgba(237,239,233,0.14);
+  }
+  #postcardsPanel .pc-sec-head h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; margin: 0; color: #EDEFE9; }
+  #postcardsPanel .pc-hint { font-size: 12px; color: #8a948d; }
+
+  #postcardsPanel .pc-card-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+  @media (min-width: 620px) {
+    #postcardsPanel .pc-card-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 24px; }
+  }
+
+  #postcardsPanel .pcard { perspective: 1600px; }
+  #postcardsPanel .pcard-inner {
+    position: relative; width: 100%; aspect-ratio: 4 / 4.6;
+    transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(.2,.8,.2,1); cursor: pointer;
+  }
+  #postcardsPanel .pcard.flipped .pcard-inner { transform: rotateY(180deg); }
+  #postcardsPanel .pc-face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border: 1px solid rgba(237,239,233,0.14); background: #1C2321; overflow: hidden; display: flex; flex-direction: column;
+  }
+  #postcardsPanel .pc-face.back { transform: rotateY(180deg); background: #EDEFE9; color: #12181A; }
+  #postcardsPanel .pc-face.front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #postcardsPanel .pc-front-overlay {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px 10px;
+    background: linear-gradient(to top, rgba(10,14,12,0.86), rgba(10,14,12,0));
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  #postcardsPanel .pc-front-overlay .pc-idx { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; letter-spacing: 0.08em; color: #c7ceca; }
+  #postcardsPanel .pc-flip-hint {
+    font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; letter-spacing: 0.04em; color: #cfeee2;
+    display: flex; align-items: center; gap: 5px;
+  }
+  #postcardsPanel .pc-flip-hint svg { width: 11px; height: 11px; }
+
+  #postcardsPanel .pc-back-photo { position: relative; height: 42%; flex-shrink: 0; overflow: hidden; background: #fff; }
+  #postcardsPanel .pc-back-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #postcardsPanel .pc-tag {
+    position: absolute; top: 7px; left: 7px; font-family: 'Space Grotesk', sans-serif; font-size: 9.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; background: rgba(18,24,26,0.72); color: #EDEFE9; padding: 3px 7px;
+  }
+  #postcardsPanel .pc-back-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  #postcardsPanel .pc-lang-toggle { display: flex; border-bottom: 1px solid rgba(18,24,26,0.12); flex-shrink: 0; }
+  #postcardsPanel .pc-lang-toggle button {
+    flex: 1; border: none; background: transparent; font-family: 'Space Grotesk', sans-serif; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 9px 6px; color: #8b9089; cursor: pointer; border-bottom: 2px solid transparent;
+  }
+  #postcardsPanel .pc-lang-toggle button.active { color: #12181A; border-bottom-color: var(--pen, #1F8F6D); }
+  #postcardsPanel .pc-transcript { flex: 1; overflow-y: auto; padding: 12px 14px 14px; font-size: 12px; line-height: 1.5; }
+  #postcardsPanel .pc-t-note { font-style: italic; color: #5B655F; font-size: 11px; margin: 0 0 9px; }
+  #postcardsPanel .pc-t-field { margin-bottom: 11px; }
+  #postcardsPanel .pc-t-field:last-child { margin-bottom: 0; }
+  #postcardsPanel .pc-t-field .pc-q {
+    font-family: 'Space Grotesk', sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--pen, #1F8F6D); margin-bottom: 3px;
+  }
+  #postcardsPanel .pc-t-field .pc-a { margin: 0; color: #12181A; }
+  #postcardsPanel .pc-t-field.list ul { margin: 2px 0 0; padding-left: 15px; }
+  #postcardsPanel .pc-t-field.list li { margin-bottom: 2px; }
+  #postcardsPanel .pc-back-close {
+    position: absolute; top: 7px; right: 7px; z-index: 2; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(18,24,26,0.72); color: #EDEFE9; border: none; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  #postcardsPanel .pc-footer {
+    max-width: 900px; margin: 0 auto; padding: 0 32px 56px; color: #7f8a83; font-size: 12px; line-height: 1.6;
+    border-top: 1px solid rgba(237,239,233,0.14); padding-top: 24px;
+  }
+
+  @media (max-width: 560px) {
+    #postcardsPanel .pc-card { max-width: 100%; width: 100%; height: 100%; border-radius: 0; }
+  }
+
+  .slide img.bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(30px) brightness(0.5) saturate(1.05);
+    transform: scale(1.2);
+  }
+
+  .slide img.fg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .slide.cover-slide > img:not(.bg):not(.fg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: none;
+    transform: none;
+  }
+
+  .slide.cover-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,9,7,0.78) 0%,
+      rgba(10,9,7,0.25) 32%,
+      transparent 55%
+    );
+    pointer-events: none;
+  }
+
+  .slide-text {
+    position: absolute;
+    left: clamp(20px, 4vw, 56px);
+    right: clamp(20px, 4vw, 56px);
+    bottom: clamp(32px, 6vw, 64px);
+    z-index: 2;
+    max-width: 640px;
+    max-height: 68%;
+    overflow-y: auto;
+    color: var(--warm-white);
+  }
+
+  .slide-text h2 {
+    margin: 0 0 14px 0;
+    font-weight: 300;
+    font-size: clamp(30px, 6vw, 80px);
+    letter-spacing: 0.01em;
+  }
+
+  .slide-text p {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.5;
+    color: rgba(250,245,235,0.86);
+  }
+
+  .slide-text a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(250,245,235,0.4);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .slide-text a:hover,
+  .slide-text a:visited {
+    color: inherit;
+  }
+
+  .slide-text a:hover {
+    text-decoration-color: rgba(250,245,235,0.9);
+  }
+
+  .slide-text .detail {
+    display: none;
+    margin-top: 12px;
+  }
+
+  .slide-text .detail p + p {
+    margin-top: 12px;
+  }
+
+  .slide.cover-slide.expanded .slide-text .detail {
+    display: block;
+  }
+
+  .read-more-btn {
+    display: inline-block;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 14px;
+    color: rgba(250,245,235,0.78);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.02em;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .read-more-btn:hover {
+    color: var(--warm-white);
+  }
+
+  .slide.cover-slide .extra-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,9,7,0.9) 0%,
+      rgba(10,9,7,0.6) 42%,
+      transparent 78%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .slide.cover-slide.expanded .extra-scrim {
+    opacity: 1;
+  }
+
+  .slide.text-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12%;
+    background: linear-gradient(160deg, #211d16 0%, #14120e 100%);
+  }
+
+  .slide.text-card p {
+    margin: 0;
+    color: var(--warm-white);
+    font-weight: 300;
+    font-size: clamp(18px, 2.6vw, 26px);
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .slide.ig-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: linear-gradient(160deg, #211d16 0%, #14120e 100%);
+    color: var(--warm-white);
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+  }
+
+  .slide.ig-slide svg {
+    opacity: 0.92;
+  }
+
+  .slide.ig-slide span {
+    font-weight: 300;
+    font-size: clamp(14px, 1.6vw, 16px);
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: rgba(250,245,235,0.82);
+  }
+
+  .map-slide {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-slide-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+  }
+
+  .map-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,18,14,0.55) 0%, rgba(20,18,14,0.4) 45%, rgba(20,18,14,0.85) 100%);
+  }
+
+  .map-slide-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .map-slide-title {
+    font-weight: 300 !important;
+    font-size: clamp(30px, 6vw, 80px) !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--warm-white) !important;
+    line-height: 1.05;
+  }
+
+  .map-slide-sub {
+    font-weight: 400 !important;
+    font-size: clamp(16px, 2.6vw, 30px) !important;
+    text-transform: none !important;
+    color: var(--warm-white) !important;
+    letter-spacing: 0.005em !important;
+    line-height: 1.05;
+    opacity: 0.92;
+    white-space: nowrap;
+  }
+
+  .map-slide.ig-slide {
+    gap: 6px;
+  }
+
+  .map-slide-icon {
+    margin-top: 14px;
+    opacity: 0.8;
+    color: var(--warm-white);
+  }
+
+  .map-slide-desc {
+    font-weight: 300 !important;
+    font-size: clamp(12px, 0.95vw, 14px) !important;
+    letter-spacing: 0.06em !important;
+    text-transform: lowercase !important;
+    color: #ffffff !important;
+    margin-top: 10px;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .carousel-dots button {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(250,245,235,0.32);
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .carousel-dots button.active {
+    background: var(--warm-white);
+    transform: scale(1.25);
+  }
+
+  @media (max-width: 560px) {
+    .carousel-frame {
+      height: 78vh;
+      height: calc(var(--vh) * 78);
+    }
+    .carousel-track {
+      height: 78vh;
+      height: calc(var(--vh) * 78);
+    }
+    .slide {
+      height: 78vh;
+      height: calc(var(--vh) * 78);
+    }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="video/hero-forest-cathedral-loop.mp4" type="video/mp4">
+    </video>
+
+    <nav>
+      <a href="#projects">projects</a>
+      <a href="cv.html">cv</a>
+      <a href="#about">about</a>
+      <a href="#contact">contact</a>
+    </nav>
+
+    <h1 class="wordmark">Andrew Amondson</h1>
+
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote">
+    <blockquote>
+      "I'm interested in creating the conditions that help us connect to nature and one another."
+    </blockquote>
+  </section>
+
+  <!-- Forest Cathedral gallery -->
+  <section class="carousel-section" id="projects">
+    <div class="carousel-wrap">
+      <div class="carousel-frame">
+        <div class="carousel-track">
+
+          <div class="slide cover-slide">
+            <img src="images/forest-cathedral-mobile-light.jpg" alt="A mirrored mobile catching a shaft of light inside the Forest Cathedral installation">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>Forest Cathedral</h2>
+              <p>A forest of mirrored mobiles inside a 13th-century tithe barn — Messums West, Wiltshire.</p>
+              <div class="detail">
+                <p>Forest Cathedral is a space for understanding as well as experience. Forest Cathedral transforms the tithe barn at Messums West, with its tree-like beams, into a living forest of light and sound. A kinetic sculpture of branching limbs and mirrored leaves gently moves with air currents created by visitors, filtering light through this forest canopy. Layered shadows animate the floor below while reflected light illuminates the ancient timbers above.</p>
+                <p>A dimensional soundscape rises from grounding tones of the forest floor and root systems through rustling mid-range frequencies to the bright presence of canopy birdsong. Forest Cathedral unites light and sound as wavelengths that move throughout the space. The Forest Cathedral installation is designed to tour England's most significant Gothic cathedrals; the start of this journey will be at Winchester Cathedral in February 2027.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/messums-west-video-poster.jpg" alt="">
+            <video class="fg-video" playsinline preload="auto" poster="images/messums-west-video-poster.jpg" data-continue-play="true">
+              <source src="video/forest-cathedral-messums-west.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-barn-roof.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-barn-roof.jpg" alt="Wide view of the barn's timber roof canopy hung with mirrored mobiles">
+          </div>
+
+          <div class="slide text-card">
+            <p>"Transcendent."</p>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-visitor-looking-up.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-visitor-looking-up.jpg" alt="A visitor looking up at the mobiles, shadows cast across the stone wall">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-mobile-closeup.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-mobile-closeup.jpg" alt="Close-up of a mirrored mobile against the timber roof">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-shadow-leaf-stone.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-shadow-leaf-stone.jpg" alt="Close-up shadow and leaf texture on a stone wall">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-light-beams.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-light-beams.jpg" alt="Light beams through the roof windows with a visitor below">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-reflection-session-1.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-reflection-session-1.jpg" alt="Visitors reclining in warm light during a reflection session">
+          </div>
+
+          <div class="slide text-card">
+            <p>"Extraordinarily Peaceful &amp; Introspective."</p>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-green-light.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-green-light.jpg" alt="A visitor standing in green light beneath the mobiles">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-reflection-session-2.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-reflection-session-2.jpg" alt="Visitors reclining in the space during a reflection session">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-single-beam.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-single-beam.jpg" alt="A visitor standing inside a single beam of light">
+          </div>
+
+          <div class="slide text-card">
+            <p>"If churches were like this, I would go more often."</p>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-cathedral-coloured-light-pillar.jpg" alt="">
+            <img class="fg" src="images/forest-cathedral-coloured-light-pillar.jpg" alt="Coloured light fracturing across a stone pillar">
+          </div>
+
+          <a class="slide ig-slide" href="https://www.instagram.com/p/DYS4Ce8lx7n/" target="_blank" rel="noopener">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
+            </svg>
+            <span>for a behind-the-scenes look</span>
+          </a>
+
+        </div>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- EER gallery -->
+  <section class="carousel-section" id="eer">
+    <div class="carousel-wrap">
+      <div class="carousel-frame">
+        <div class="carousel-track">
+
+          <div class="slide cover-slide">
+            <img src="images/eer-neue-nationalgalerie-hero.jpg" alt="Visitors walking together past the black steel pavilion of the Neue Nationalgalerie, Berlin">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>Walking With</h2>
+              <p>Walking With Our Future Ideas — Festival of Future Nows, Neue Nationalgalerie, Berlin, 2025.</p>
+              <div class="detail">
+                <p>Where do we go from here? Artist Andrew Amondson invited visitors to walk with him and with the ideas that will shape our shared futures with the living world. These generative walks investigate 'openings', or moments when walking together creates the necessary space, time, and attention for creative connection and collective agency. Each walk took twenty-two minutes, followed by a period of shared reflection.</p>
+                <p>As part of that reflection, each visitor was invited to draw a line on an aerial map of Neue Nationalgalerie, remembering their route around the museum and marking the spots where they felt a connection or resonance, finishing with three short reflections on the back of a postcard. A selection of those postcards, transcribed and translated between English and German, can be seen <a class="js-postcards-link" href="#">here</a>.</p>
+                <p>Walking With Our Future Ideas is a performance of <a href="https://www.eer.info/activities/walking-with" target="_blank" rel="noopener">Walking With</a>, a walking-based research and creative practice by Andrew Amondson.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/eer-walking-with-video-poster.jpg" alt="">
+            <video class="fg-video" playsinline preload="auto" poster="images/eer-walking-with-video-poster.jpg">
+              <source src="video/walking-with-our-future-ideas-30s.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+            <a class="post-video-cta" href="https://www.eer.info/events/festival-of-future-nows-2025" target="_blank" rel="noopener" hidden>watch the full film &amp; learn more at EER.info →</a>
+          </div>
+
+          <button class="slide ig-slide map-slide js-postcards-link" id="postcardsHeroBtn" type="button">
+            <img class="map-slide-bg" src="images/eer-postcard-blank-map.jpg" alt="A blank postcard showing the aerial site plan before a route is drawn on it">
+            <div class="map-slide-content">
+              <span class="map-slide-title" id="postcardsTitle">Postcards</span>
+              <svg class="map-slide-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2.5" y="4" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M3 6.5L12 12L21 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="map-slide-desc">Read the reflections, front and back</span>
+            </div>
+          </button>
+
+          <div class="slide cover-slide">
+            <img src="images/eer-studio-olafur-eliasson-walk.jpg" alt="Two people walking together in conversation on a Berlin street">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>Walking With</h2>
+              <p>Studio Olafur Eliasson, Berlin, 2024–2025.</p>
+              <div class="detail">
+                <p>In spring 2024, Andrew Amondson invited Studio Olafur Eliasson to go for a walk. Motivated by a 2014 Stanford study that found a person's creative output increases by an average of 60% when they are walking, Andrew proposed exploring the effects of integrating walking into the work day as a way to provide space, time, and attention for creative ideation and connection. Andrew's project, titled Walking With, set out to explore the cognitive and embodied potentials of walking as a creative practice.</p>
+                <p>Framed by EER, Walking With grew at the studio within the Garden, an experimental space at the heart of the studio's working culture, where there are no intended outcomes and where the freedom to explore, speculate, and experiment without the pressure of measurable results is actively cultivated.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <a class="slide ig-slide map-slide" href="https://andrewamondson-stack.github.io/Walking-With/" target="_blank" rel="noopener">
+            <img class="map-slide-bg" src="images/eer-gps-route-visualisation.jpg" alt="Data visualization of GPS route segments converging from multiple Walking With sessions">
+            <div class="map-slide-content">
+              <span class="map-slide-title" id="mapSlideTitle">Walking With</span>
+              <span class="map-slide-sub" id="mapSlideSub">Studio Olafur Eliasson</span>
+              <svg class="map-slide-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M9 4L3 6.5V20L9 17.5L15 20L21 17.5V4L15 6.5L9 4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M9 4V17.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M15 6.5V20" stroke="currentColor" stroke-width="1.4"/>
+              </svg>
+              <span class="map-slide-desc">Interactive Map and Research Repository</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- Reusable external-link preview lightbox -->
+  <div class="lightbox-overlay" id="lightboxOverlay" hidden>
+    <div class="lightbox-card">
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      <span class="lightbox-domain"></span>
+      <h3 class="lightbox-title"></h3>
+      <p class="lightbox-desc"></p>
+      <a class="lightbox-open" target="_blank" rel="noopener">Open site →</a>
+    </div>
+  </div>
+
+  <!-- Postcards panel: native in-page gallery, ported from the real Walking With site -->
+  <div class="lightbox-overlay" id="postcardsPanel" hidden>
+    <div class="pc-card">
+      <button class="pc-close" aria-label="Close">&times;</button>
+      <div class="pc-scroll">
+        <div class="pc-content">
+
+          <header class="pc-header">
+            <p class="pc-eyebrow">Walking With · Festival of Future Nows</p>
+            <h1 class="pc-h1">Postcards from <em>Our&nbsp;Future&nbsp;Ideas</em></h1>
+            <div class="pc-lede">
+              <p>During the Festival of Future Nows at the Neue Nationalgalerie, <em>Walking With Our Future Ideas</em> invited visitors to walk the museum's grounds alongside strangers and talk about the future. After the walk, each person filled in a postcard: a line drawn by hand across an aerial view of the site, and three short answers reflecting on their walk.</p>
+              <p><strong>Eighteen of those postcards are collected below</strong>, front and back, in whichever language the person reached for. Click a card to turn it over and read what they wrote, then switch between the original and its translation.</p>
+            </div>
+            <div class="pc-meta-row">
+              <div><span class="pc-label">Location</span><span class="pc-val">Neue Nationalgalerie, Berlin</span></div>
+              <div><span class="pc-label">Format</span><span class="pc-val">Hand-drawn route + 3-question reflection</span></div>
+              <div><span class="pc-label">Languages</span><span class="pc-val">German &amp; English, as written</span></div>
+              <div><span class="pc-label">Postcards shown</span><span class="pc-val">18</span></div>
+            </div>
+          </header>
+
+          <section class="pc-hero-map">
+            <div class="pc-frame">
+              <img src="images/eer-postcard-held-up.jpg" alt="A visitor holding up their filled-out postcard from Walking With Our Future Ideas">
+              <div class="pc-cap"><em>Walking With Our Future Ideas</em> · Participant with postcard</div>
+            </div>
+            <div class="pc-instructions">
+              <div class="pc-step">
+                <span class="pc-num">1</span>
+                <p>Participants walked alongside strangers, being paired with new walking partners along the way.</p>
+              </div>
+              <div class="pc-step">
+                <span class="pc-num">2</span>
+                <p>They walked and talked. Afterwards, on the front of the postcards they were given, they traced the remembered route and marked the moments on their map where they felt a resonance or connection.</p>
+              </div>
+              <div class="pc-step">
+                <span class="pc-num">3</span>
+                <p>On the back, they finished three sentences about the walk. <strong>Click any card in the grid</strong> to turn it over.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="pc-grid-section">
+            <div class="pc-sec-head">
+              <h2>The postcards</h2>
+              <span class="pc-hint">Click to flip · toggle Original / Translation on the back</span>
+            </div>
+            <div class="pc-card-grid" id="pcGrid"></div>
+          </section>
+
+          <footer class="pc-footer">
+            Walking With is a walking-based research and creative practice by Andrew Amondson. These postcards were collected during public presentations of the project at the Festival of Future Nows, Neue Nationalgalerie Berlin. Transcriptions are read directly from the handwritten originals; a few words remain uncertain where the handwriting is ambiguous, and are marked with <em>[unclear]</em>.
+          </footer>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Some mobile/in-app browsers don't reliably size elements with svh/dvh —
+  // this measures the real viewport height in JS and exposes it as a CSS
+  // variable, which every section height above is built on as a fallback.
+  (function () {
+    function setVH() {
+      document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    }
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+  })();
+  </script>
+
+  <script>
+  // Scale the "Studio Olafur Eliasson" subline so its rendered width
+  // exactly matches "Walking With" above it, at any screen size.
+  (function () {
+    function matchWidth() {
+      var title = document.getElementById('mapSlideTitle');
+      var sub = document.getElementById('mapSlideSub');
+      if (!title || !sub) return;
+
+      var titleWidth = title.getBoundingClientRect().width;
+      var subWidth = sub.getBoundingClientRect().width;
+      if (!titleWidth || !subWidth) return;
+
+      var currentSize = parseFloat(getComputedStyle(sub).fontSize);
+      var ratio = titleWidth / subWidth;
+      sub.style.fontSize = (currentSize * ratio) + 'px';
+    }
+
+    // Fonts may still be loading when this first runs, so try a few times.
+    window.addEventListener('load', matchWidth);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(matchWidth);
+    }
+    window.addEventListener('resize', matchWidth);
+    setTimeout(matchWidth, 100);
+    setTimeout(matchWidth, 500);
+  })();
+  </script>
+
+  <script>
+  (function () {
+    // Wire up every carousel section on the page independently.
+    var wraps = Array.prototype.slice.call(document.querySelectorAll('.carousel-wrap'));
+
+    wraps.forEach(function (wrap) {
+      var track = wrap.querySelector('.carousel-track');
+      var dotsWrap = wrap.querySelector('.carousel-dots');
+      var slides = Array.prototype.slice.call(track.children);
+
+      // Dots
+      slides.forEach(function (slide, i) {
+        var dot = document.createElement('button');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', function () {
+          slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.prototype.slice.call(dotsWrap.children);
+
+      // Any video within this carousel: start fresh (from 0) the first time
+      // its slide becomes active, then keep playing as the visitor swipes
+      // onward rather than pausing when it leaves view.
+      function activateVideoIn(slide) {
+        var video = slide.querySelector('video.fg-video');
+        if (!video) return;
+        var soundBtn = slide.querySelector('.sound-btn');
+        var cta = slide.querySelector('.post-video-cta');
+
+        if (video.paused || video.ended) {
+          video.currentTime = 0;
+          video.muted = false;
+          if (soundBtn) soundBtn.hidden = true;
+          if (cta) { cta.classList.remove('visible'); cta.hidden = true; }
+
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function () {
+              video.muted = true;
+              video.play().catch(function () {});
+              if (soundBtn) soundBtn.hidden = false;
+            });
+          }
+          // Some mobile browsers silently force-mute programmatic playback
+          // instead of rejecting play() above — catch that case too.
+          setTimeout(function () {
+            if ((video.muted || video.paused) && soundBtn) soundBtn.hidden = false;
+          }, 600);
+        }
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            var idx = slides.indexOf(entry.target);
+            dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+            activateVideoIn(entry.target);
+          } else {
+            // Leaving this slide — stop its video's sound, unless this
+            // particular video is marked to keep playing as the visitor
+            // swipes onward (e.g. Forest Cathedral's).
+            var leavingVideo = entry.target.querySelector('video.fg-video');
+            if (leavingVideo && leavingVideo.dataset.continuePlay !== 'true' && !leavingVideo.paused) {
+              leavingVideo.pause();
+              var leavingCta = entry.target.querySelector('.post-video-cta');
+              if (leavingCta) { leavingCta.classList.remove('visible'); leavingCta.hidden = true; }
+            }
+          }
+        });
+      }, { root: track, threshold: [0.6] });
+
+      slides.forEach(function (s) { observer.observe(s); });
+
+      // Reveal each video's post-video CTA (if it has one) once it finishes.
+      slides.forEach(function (slide) {
+        var video = slide.querySelector('video.fg-video');
+        var cta = slide.querySelector('.post-video-cta');
+        if (!video || !cta) return;
+        video.addEventListener('ended', function () {
+          cta.hidden = false;
+          cta.classList.add('visible');
+        });
+      });
+    });
+
+    // Tap-for-sound buttons (scoped to whichever slide they're in)
+    document.querySelectorAll('.sound-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var video = btn.closest('.slide').querySelector('video.fg-video');
+        if (!video) return;
+        video.muted = false;
+        video.play();
+        btn.hidden = true;
+      });
+    });
+
+    // Read-more toggles (scoped to whichever cover-slide they're in)
+    document.querySelectorAll('.read-more-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var slide = btn.closest('.cover-slide');
+        var expanded = slide.classList.toggle('expanded');
+        btn.textContent = expanded ? 'read less' : 'read more';
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+    });
+
+    // Instagram / external-link slides: stop any playing site video so its
+    // audio doesn't compete with sound on the page being opened.
+    document.querySelectorAll('.ig-slide').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.querySelectorAll('video').forEach(function (v) {
+          v.pause();
+          v.muted = true;
+        });
+      });
+    });
+
+    // External-link preview lightbox — a lightweight "floating window"
+    // stand-in, since real cross-site iframes aren't available in this
+    // hosting environment (its own security policy, not the target site's).
+    var lightbox = document.getElementById('lightboxOverlay');
+    var lbDomain = lightbox.querySelector('.lightbox-domain');
+    var lbTitle = lightbox.querySelector('.lightbox-title');
+    var lbDesc = lightbox.querySelector('.lightbox-desc');
+    var lbOpen = lightbox.querySelector('.lightbox-open');
+    var lbClose = lightbox.querySelector('.lightbox-close');
+
+    function openLightbox(link) {
+      lbDomain.textContent = link.dataset.previewDomain || '';
+      lbTitle.textContent = link.dataset.previewTitle || '';
+      lbDesc.textContent = link.dataset.previewDesc || '';
+      lbOpen.href = link.dataset.frameSrc || link.href;
+      lightbox.hidden = false;
+      requestAnimationFrame(function () { lightbox.classList.add('visible'); });
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('visible');
+      setTimeout(function () { lightbox.hidden = true; }, 250);
+    }
+
+    document.querySelectorAll('.js-iframe-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openLightbox(link);
+      });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('visible')) closeLightbox();
+    });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    var PEN = { teal: "#1F8F6D", cobalt: "#2A4FC4", coral: "#C1443B" };
+
+    const postcards = [
+      {
+        front: "images/postcards/postcard-01-front.jpg", back: "images/postcards/postcard-01-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Was curious what would happen!", de: "War neugierig, was passieren würde!" },
+          { q: "After the walk, I", en: "Was happy and grateful for the inspiring exchange that I had!", de: "War glücklich und dankbar für den inspirierenden Austausch, den ich hatte!" },
+          { q: "Something I'll take away", en: "Great motivation to give art, opportunity, experience and reflection more room in my life! Thank you!", de: "Große Motivation, Kunst, Gelegenheit, Erfahrung und Reflexion mehr Raum in meinem Leben zu geben! Danke!" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-02-front.jpg", back: "images/postcards/postcard-02-back.jpg", pen: PEN.teal, origLang: "de",
+        note: { de: "November 2025", en: "November 2025" },
+        fields: [
+          { q: "Before the walk, I", de: "Ich war sehr neugierig, was geschieht, und froh, mitzumachen.", en: "I was very curious what would happen, and glad to take part." },
+          { q: "After the walk, I", de: "Ich bin voller Sorgen, wegen der Gedanken, die mir mitgeteilt wurden.", en: "I am full of worry, because of the thoughts that were shared with me." },
+          { q: "Something I'll take away", de: "Kunst ist Bewegung ist Leben ist Wanderung ist Liebe ist Kunst.", en: "Art is movement is life is wandering is love is art." }
+        ],
+        close: { de: "Danke ♥", en: "Thank you ♥" }
+      },
+      {
+        front: "images/postcards/postcard-03-front.jpg", back: "images/postcards/postcard-03-back.jpg", pen: PEN.teal, origLang: "de",
+        fields: [
+          { q: "Before the walk, I", de: "Habe ich gesucht.", en: "I was searching." },
+          { q: "After the walk, I", de: "Habe ich was gefunden.", en: "I found something." },
+          { q: "Something I'll take away", de: "Man findet nicht immer, was man sucht — aber das ist auch gut so.", en: "You don't always find what you're looking for — but that's alright too." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-04-front.jpg", back: "images/postcards/postcard-04-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I was", en: "Curious, I was.", de: "Neugierig war ich." },
+          { q: "After the walk, I was", en: "Full of ideas, good feeling about getting in touch with completely unknown people to me.", de: "Voller Ideen, mit einem guten Gefühl dabei, mit mir völlig unbekannten Menschen in Kontakt zu kommen." },
+          { q: "Something I'll take away", en: "The idea — marvellous!", de: "Die Idee — wunderbar!" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-05-front.jpg", back: "images/postcards/postcard-05-back.jpg", pen: PEN.cobalt, origLang: "de",
+        note: { de: "Eine tolle Aktion! Danke!", en: "A wonderful initiative! Thank you!" },
+        fields: [
+          { q: "Before the walk, I", de: "Ich liebe diesen Ort in Berlin.", en: "I love this place in Berlin." },
+          { q: "After the walk, I", de: "Es ist wunderbar, hier mit fremden Menschen über Kunst, den Ort … in Kontakt zu kommen.", en: "It's wonderful to connect here with strangers about art, the place …" },
+          { q: "Something I'll take away", de: "Mit Bewegung + Begegnung / Gespräch mit fremden Menschen unterschiedlichen Alters kommen neue Themen, evtl. Verständnis, andere Einblicke, Gedanken … [unclear]", en: "With movement + encounter / conversation with strangers of different ages come new subjects — perhaps understanding, other insights, other trains of thought … [unclear]" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-06-front.jpg", back: "images/postcards/postcard-06-back.jpg", pen: PEN.cobalt, origLang: "de",
+        fields: [
+          { q: "Before the walk, I", de: "Völlig ohne Plan / Idee vor der Ausstellung (außer meine eigene Beteiligung in 2h).", en: "Completely without a plan or idea before the exhibition (apart from my own part in it, in 2h)." },
+          { q: "After the walk, I", de: "Bin ich dankbar + inspiriert, mit verschiedenen Menschen über die Zukunft zu sprechen — + teilweise unsicher, doch recht hoffnungsvoll, zu realisieren, dass ich mich sicher + wohl empfinde.", en: "I am grateful and inspired to have spoken with different people about the future — and at times unsure, yet quite hopeful, to realize that I feel safe and at ease." },
+          { q: "Something I'll take away", de: "Noch mehr Kontakt + Gespräche entstehen zu lassen.", en: "To let even more contact and conversation arise." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-07-front.jpg", back: "images/postcards/postcard-07-back.jpg", pen: PEN.coral, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Was deeply tired and not in the mood to talk.", de: "War tief erschöpft und nicht in der Stimmung zu reden." },
+          { q: "After the walk, I", en: "Was (unsurprisingly) feeling quite chatty.", de: "War (wenig überraschend) ziemlich gesprächig." },
+          { q: "Something I'll take away", en: "The slowing down that happens when we take turns listening to one another.", de: "Das Verlangsamen, das entsteht, wenn wir uns abwechselnd zuhören." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-08-front.jpg", back: "images/postcards/postcard-08-back.jpg", pen: PEN.cobalt, origLang: "de",
+        fields: [
+          { q: "Before the walk, I", de: "Neugierig.", en: "Curious." },
+          { q: "After the walk, I", de: "Nette Leute „kennen“ gelernt.", en: "Got to \u201cknow\u201d some nice people." },
+          { q: "Something I'll take away", de: "Sich austauschen ist immer interessant, und man nimmt immer was Neues mit!", en: "Exchanging with someone is always interesting, and you always take something new away with you!" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-09-front.jpg", back: "images/postcards/postcard-09-back.jpg", pen: PEN.cobalt, origLang: "de",
+        fields: [
+          { q: "Before the walk, I was", de: "Auf die Ausstellung von außen fokussiert.", en: "Focused on the exhibition, from the outside." },
+          { q: "After the walk, I", de: "Ausstellung vorübergehend nicht Priorität, sondern Gedanken von fremden Menschen gehört → Interesse am Austausch geweckt.", en: "The exhibition was, for a while, not the priority — instead I listened to strangers' thoughts → it woke an interest in exchange." },
+          { q: "Something I'll take away", de: "Wunsch nach mehr Austausch im öffentlichen Raum.", en: "A wish for more exchange in public space." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-10-front.jpg", back: "images/postcards/postcard-10-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Did not know what to expect.", de: "Wusste nicht, was mich erwartet." },
+          { q: "After the walk, I", en: "It was inspiring to talk to strangers. In such a short time, we've had many wonderful and meaningful conversations, and shared thoughtful ideas.", de: "Es war inspirierend, mit Fremden zu sprechen. In so kurzer Zeit hatten wir viele wunderbare und bedeutungsvolle Gespräche und teilten durchdachte Ideen." },
+          { q: "Something I'll take away", en: "It is great to talk to people and learn different ideas and perspectives.", de: "Es ist großartig, mit Menschen zu sprechen und andere Ideen und Perspektiven kennenzulernen." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-11-front.jpg", back: "images/postcards/postcard-11-back.jpg", pen: PEN.cobalt, origLang: "de",
+        fields: [
+          { q: "Before the walk, I", de: "War ich neugierig.", en: "I was curious." },
+          { q: "After the walk, I", de: "War ich sehr erfüllt.", en: "I was very fulfilled." },
+          { q: "Something I'll take away", de: "Dass es viele freundliche + interessante Menschen in der Stadt gibt.", en: "That there are many friendly and interesting people in this city." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-12-front.jpg", back: "images/postcards/postcard-12-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Wanted to go home.", de: "Wollte nach Hause gehen." },
+          { q: "After the walk, I", en: "Was very glad I stayed, because I had really nice and heart-warming conversations with a diverse group of people.", de: "War sehr froh, dass ich geblieben bin, weil ich wirklich schöne und herzerwärmende Gespräche mit einer vielfältigen Gruppe von Menschen hatte." },
+          { q: "Something I'll take away", en: "That it is good to meet new people and get out of my comfort zone!", de: "Dass es gut ist, neue Menschen kennenzulernen und die eigene Komfortzone zu verlassen!" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-13-front.jpg", back: "images/postcards/postcard-13-back.jpg", pen: PEN.cobalt, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Was not sure about it.", de: "War mir nicht sicher." },
+          { q: "After the walk, I", en: "Reflected with both English and German speakers — it was really nice.", de: "Habe mit englisch- und deutschsprachigen Menschen reflektiert — es war wirklich schön." },
+          { q: "Something I'll take away", en: "I didn't think it would be fun talking to the older people … I was wrong.", de: "Ich hätte nicht gedacht, dass es Spaß macht, mit den älteren Leuten zu sprechen … ich habe mich geirrt." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-14-front.jpg", back: "images/postcards/postcard-14-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Didn't know where to begin.", de: "Wusste nicht, wo ich anfangen sollte." },
+          { q: "After the walk, I", en: "Had met two new strangers.", de: "Hatte zwei neue, mir unbekannte Menschen kennengelernt." },
+          { q: "Something I'll take away", en: "The pressure of generating conversation while walking, and following the group.", de: "Der Druck, während des Gehens ein Gespräch am Laufen zu halten und dabei der Gruppe zu folgen." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-15-front.jpg", back: "images/postcards/postcard-15-back.jpg", pen: PEN.cobalt, origLang: "mixed",
+        fields: [
+          { q: "Before the walk, I", en: "Was alone.", de: "War ich allein." },
+          { q: "After the walk, I", en: "Was touched.", de: "War ich berührt." },
+          { q: "Something I'll take away", en: "Move! Walk!", de: "Beweg dich! Walk!" }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-16-front.jpg", back: "images/postcards/postcard-16-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Had mainly discussed the exhibit with non-Germans.", de: "Hatte die Ausstellung bisher hauptsächlich mit Nicht-Deutschen besprochen." },
+          { q: "After the walk, I", en: "Thoroughly enjoyed reflecting on the precision in the German language, and the care my interlocutors took in expressing and sharing.", de: "Habe es sehr genossen, über die Präzision der deutschen Sprache nachzudenken, und über die Sorgfalt, mit der meine Gesprächspartner:innen sich ausdrückten und mitteilten." },
+          { q: "Something I'll take away", en: "I want more opportunities to talk with people I don't know.", de: "Ich möchte mehr Gelegenheiten haben, mit Menschen zu sprechen, die ich nicht kenne." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-17-front.jpg", back: "images/postcards/postcard-17-back.jpg", pen: PEN.teal, origLang: "de",
+        fields: [
+          { q: "Before the walk, I felt", de: "Anspannung", en: "Tension." },
+          { q: "After the walk, I felt", de: "Gelöster, dankbar, erfreut.", en: "More relaxed, grateful, delighted." },
+          { q: "Something I'll take away", de: "Der Mensch braucht Menschen — leider können sie auch Böses bedeuten.", en: "People need people — though sadly, they can also mean harm." }
+        ]
+      },
+      {
+        front: "images/postcards/postcard-18-front.jpg", back: "images/postcards/postcard-18-back.jpg", pen: PEN.teal, origLang: "en",
+        fields: [
+          { q: "Before the walk, I", en: "Felt like a guest at this space.", de: "Fühlte mich wie ein Gast an diesem Ort." },
+          { q: "After the walk, I", en: "Felt like part of the space, part of a group.", de: "Fühlte mich als Teil des Ortes, Teil einer Gruppe." },
+          { q: "Something I'll take away", en: "Meeting people while walking is easier. Walking is like meditation, just with one focus. Good to face your mind and just listen.",
+            de: "Menschen beim Gehen zu treffen fällt leichter. Gehen ist wie Meditation, nur mit einem Fokus. Gut, sich seinem eigenen Kopf zu stellen und einfach zuzuhören.",
+            list: true }
+        ]
+      }
+    ];
+    
+
+    var QUESTIONS = [
+      { en: "Before the walk, I:", de: "Vor dem Spaziergang:" },
+      { en: "After the walk, I:", de: "Nach dem Spaziergang:" },
+      { en: "Something I'll take away is:", de: "Was ich mitnehme, ist:" }
+    ];
+
+    var grid = document.getElementById("pcGrid");
+    var built = false;
+
+    function buildGrid() {
+      if (built) return;
+      built = true;
+
+      postcards.forEach(function (pc, i) {
+        var card = document.createElement("div");
+        card.className = "pcard";
+        card.style.setProperty("--pen", pc.pen);
+
+        var num = String(i + 1).padStart(2, "0");
+
+        card.innerHTML =
+          '<div class="pcard-inner">' +
+            '<div class="pc-face front">' +
+              '<img src="' + pc.front + '" alt="Postcard ' + num + ' front — hand-drawn walking route on the site plan" loading="lazy">' +
+              '<div class="pc-front-overlay">' +
+                '<span class="pc-idx">Postcard ' + num + '</span>' +
+                '<span class="pc-flip-hint">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>' +
+                  'Flip' +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="pc-face back">' +
+              '<button class="pc-back-close" aria-label="Flip back">&#8630;</button>' +
+              '<div class="pc-back-photo">' +
+                '<span class="pc-tag">As written</span>' +
+                '<img src="' + pc.back + '" alt="Postcard ' + num + ' back — handwritten reflections" loading="lazy">' +
+              '</div>' +
+              '<div class="pc-back-body">' +
+                '<div class="pc-lang-toggle">' +
+                  '<button class="lt-orig active" data-mode="orig">Original</button>' +
+                  '<button class="lt-trans" data-mode="trans">Translation</button>' +
+                '</div>' +
+                '<div class="pc-transcript"></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+
+        var transcript = card.querySelector(".pc-transcript");
+        var btnOrig = card.querySelector(".lt-orig");
+        var btnTrans = card.querySelector(".lt-trans");
+        var closeBtn = card.querySelector(".pc-back-close");
+
+        function render(mode) {
+          var html = "";
+          if (pc.note) {
+            var noteText = mode === "orig" ? (pc.origLang === "de" ? pc.note.de : pc.note.en) : (pc.origLang === "de" ? pc.note.en : pc.note.de);
+            html += '<p class="pc-t-note">' + noteText + '</p>';
+          }
+          pc.fields.forEach(function (f, idx) {
+            var text;
+            if (pc.origLang === "mixed") {
+              text = mode === "orig" ? (f.en + ' <span style="color:#5B655F">/ ' + f.de + '</span>') : ('<span style="color:#5B655F">' + f.en + ' /</span> ' + f.de);
+            } else if (pc.origLang === "de") {
+              text = mode === "orig" ? f.de : f.en;
+            } else {
+              text = mode === "orig" ? f.en : f.de;
+            }
+            var qPair = QUESTIONS[idx];
+            var qText;
+            if (pc.origLang === "de") {
+              qText = mode === "orig" ? qPair.de : qPair.en;
+            } else {
+              qText = mode === "orig" ? qPair.en : qPair.de;
+            }
+            var cls = f.list ? "pc-t-field list" : "pc-t-field";
+            if (f.list) {
+              var items = text.split(/\.\s+/).filter(Boolean).map(function (s) { return s.replace(/\.$/, '').trim(); }).map(function (s) { return '<li>' + s + '.</li>'; }).join("");
+              html += '<div class="' + cls + '"><div class="pc-q">' + qText + '</div><ul>' + items + '</ul></div>';
+            } else {
+              html += '<div class="' + cls + '"><div class="pc-q">' + qText + '</div><p class="pc-a">' + text + '</p></div>';
+            }
+          });
+          if (pc.close) {
+            var closeText = mode === "orig" ? (pc.origLang === "de" ? pc.close.de : pc.close.en) : (pc.origLang === "de" ? pc.close.en : pc.close.de);
+            html += '<p class="pc-t-note" style="margin-top:10px;">' + closeText + '</p>';
+          }
+          transcript.innerHTML = html;
+        }
+
+        render("orig");
+
+        btnOrig.addEventListener("click", function (e) {
+          e.stopPropagation();
+          btnOrig.classList.add("active");
+          btnTrans.classList.remove("active");
+          render("orig");
+        });
+        btnTrans.addEventListener("click", function (e) {
+          e.stopPropagation();
+          btnTrans.classList.add("active");
+          btnOrig.classList.remove("active");
+          render("trans");
+        });
+        closeBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          card.classList.remove("flipped");
+        });
+        card.addEventListener("click", function () {
+          card.classList.toggle("flipped");
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    var panel = document.getElementById('postcardsPanel');
+    var pcClose = panel.querySelector('.pc-close');
+
+    function openPostcards() {
+      buildGrid();
+      panel.hidden = false;
+      requestAnimationFrame(function () { panel.classList.add('visible'); });
+    }
+    function closePostcards() {
+      panel.classList.remove('visible');
+      setTimeout(function () { panel.hidden = true; }, 250);
+    }
+
+    document.querySelectorAll('.js-postcards-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openPostcards();
+      });
+    });
+    pcClose.addEventListener('click', closePostcards);
+    panel.addEventListener('click', function (e) { if (e.target === panel) closePostcards(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('visible')) closePostcards(); });
+  })();
+  </script>
+
+</body>
+</html>

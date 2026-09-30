@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Amondson — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --ink: #1c1914;
+    --ink-soft: rgba(28,25,20,0.62);
+    --ink-faint: rgba(28,25,20,0.4);
+    --line: rgba(28,25,20,0.14);
+    --warm-white: rgba(250, 245, 235, 0.96);
+    --dark: #14120e;
+    --vh: 1vh;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  }
+
+  /* ---------- Top nav ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(18px, 3vw, 32px) clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wordmark-link {
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px);
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(16px, 2.2vw, 32px);
+  }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--ink);
+  }
+
+  nav a.current {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Content ---------- */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(48px, 8vh, 96px) clamp(20px, 5vw, 40px) clamp(80px, 12vh, 140px);
+  }
+
+  .bio h1 {
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    font-size: clamp(30px, 4.4vw, 44px);
+    letter-spacing: 0.005em;
+  }
+
+  .bio p {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 640px;
+  }
+
+  section.cv-section {
+    margin-top: clamp(48px, 7vh, 76px);
+  }
+
+  .section-label {
+    display: block;
+    font-weight: 400;
+    font-size: clamp(12px, 0.95vw, 14px);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .entry-main {
+    flex: 1;
+    font-weight: 400;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.5;
+  }
+
+  .entry-main a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .entry-main a:hover {
+    text-decoration-color: var(--ink);
+  }
+
+  .entry-meta {
+    flex-shrink: 0;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    color: var(--ink-soft);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .entry-note {
+    display: block;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 14.5px);
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 560px) {
+    .entry {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .entry-meta {
+      text-align: left;
+    }
+    nav { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <a class="wordmark-link" href="index.html">Andrew Amondson</a>
+    <nav>
+      <a href="index.html#projects">projects</a>
+      <a href="#" class="current">cv</a>
+      <a href="#">about</a>
+      <a href="#">contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="bio">
+      <h1>CV</h1>
+      <p>Andrew Amondson is an American-born artist and filmmaker based in Berlin. His practice spans large-scale kinetic installation, soundscape composition, documentary filmmaking, and <em>Walking With</em> — a walking methodology developed across Studio Olafur Eliasson, Netflix, and the Berlinale before becoming its own art-and-science practice. He is a member of Studio Olafur Eliasson, a collaborator with EER, and a Fellow of the Royal Society for Arts.</p>
+    </div>
+
+    <section class="cv-section">
+      <span class="section-label">experience</span>
+      <div class="entry"><div class="entry-main">Collaborator, EER</div><div class="entry-meta">2024–present</div></div>
+      <div class="entry"><div class="entry-main">Creative Strategist, Netflix</div><div class="entry-meta">2023–2024</div></div>
+      <div class="entry"><div class="entry-main">Lead Artist, Forest of Imagination, Bath</div><div class="entry-meta">2021–present</div></div>
+      <div class="entry"><div class="entry-main">Member, Studio Olafur Eliasson, Berlin</div><div class="entry-meta">2017–present</div></div>
+      <div class="entry"><div class="entry-main">Moderator, Berlinale</div><div class="entry-meta">2016–2023</div></div>
+      <div class="entry"><div class="entry-main">Artist &amp; Co-Founder, Playful Nature, Berlin</div><div class="entry-meta">2015–2020</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">selected exhibitions &amp; installations</span>
+
+      <div class="entry">
+        <div class="entry-main">
+          <a href="https://dorsetlife.co.uk/forest-cathedral-installation-opens-at-messums-west-ahead-of-public-launch/" target="_blank" rel="noopener">Forest Cathedral</a> — Messums West, Wiltshire
+          <span class="entry-note">touring to Winchester Cathedral, Feb 2027</span>
+        </div>
+        <div class="entry-meta">2026</div>
+      </div>
+
+      <div class="entry"><div class="entry-main">The Water's Way — American Museum &amp; Gardens, Bath</div><div class="entry-meta">2026</div></div>
+
+      <div class="entry"><div class="entry-main">Walking With Our Future Ideas — Festival of Future Nows, Neue Nationalgalerie, Berlin</div><div class="entry-meta">2025</div></div>
+      <div class="entry"><div class="entry-main">Woven Together — Dinton Pastures Country Park, Wokingham</div><div class="entry-meta">2025</div></div>
+      <div class="entry"><div class="entry-main">Precious — The Scale of Water (group), Michael Penny Gallery, Bath</div><div class="entry-meta">2024</div></div>
+      <div class="entry"><div class="entry-main">Where We Find Ourselves — permanent installation, Museo Leonardo da Vinci Playlab, Milan</div><div class="entry-meta">2024</div></div>
+
+      <div class="entry">
+        <div class="entry-main"><a href="https://www.bathecho.co.uk/news/community/forest-of-imagination-event-assembly-rooms-102340/" target="_blank" rel="noopener">Wondering Ways</a> — National Trust Bath Assembly Rooms</div>
+        <div class="entry-meta">2023</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-main">
+          <a href="https://landezine-award.com/forest-of-imagination-assemble-in-the-forest/" target="_blank" rel="noopener">Living Tree — Mirror Maze</a> — The Egg Theatre, Forest of Imagination
+          <span class="entry-note">Inspire Future Generations Award</span>
+        </div>
+        <div class="entry-meta">2022</div>
+      </div>
+
+      <div class="entry"><div class="entry-main">You and Me Make Tree — Forest of Imagination, Bath</div><div class="entry-meta">2020/21</div></div>
+      <div class="entry"><div class="entry-main">Organic Geometry; Trees for the Forest — tête, Berlin</div><div class="entry-meta">2020</div></div>
+      <div class="entry"><div class="entry-main">The Big Green Thing — Counterplay, Dokk1, Aarhus</div><div class="entry-meta">2019</div></div>
+      <div class="entry"><div class="entry-main">Ushi — The Art of Vegan Sushi — Food Art Week, Berlin</div><div class="entry-meta">2017</div></div>
+      <div class="entry"><div class="entry-main">String Theory — tête, Berlin</div><div class="entry-meta">2016</div></div>
+      <div class="entry"><div class="entry-main">William Don't Tell — tête, Berlin</div><div class="entry-meta">2014</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">permanent collections</span>
+      <div class="entry"><div class="entry-main">Living Tree — Reflection — Bishopstrow Hotel</div><div class="entry-meta">2025 / installed 2026</div></div>
+      <div class="entry"><div class="entry-main">Walking With — Dinton Pastures Country Park, Wokingham</div><div class="entry-meta">2025</div></div>
+      <div class="entry"><div class="entry-main">Where We Find Ourselves — Museo Leonardo da Vinci Playlab, Milan</div><div class="entry-meta">2024</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">film</span>
+      <div class="entry"><div class="entry-main">Restoring Time — director, producer, writer<span class="entry-note">Wim Wenders Foundation; featured on the Criterion Collection release of The Road Trilogy</span></div></div>
+      <div class="entry"><div class="entry-main">Making 1899 — producer, director<span class="entry-note">Netflix</span></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.imdb.com/name/nm1502567/" target="_blank" rel="noopener">Full filmography — IMDb</a></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">publications</span>
+      <div class="entry">
+        <div class="entry-main">Hay, P. and Amondson, A. (2026). "Forest of Imagination and the Living Tree." In <em>Ecologies in Practice and Learning: Arts Interventions in the Earth Crisis</em>, ed. M. Matthews. Palgrave Macmillan, pp. 203–218. ISBN 9783031823374</div>
+      </div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">awards</span>
+      <div class="entry"><div class="entry-main">Inspire Future Generations Award — Living Tree Mirror Maze</div><div class="entry-meta">2022</div></div>
+      <div class="entry"><div class="entry-main">Shortlisted, Lexus Design Award — The Living Tree</div><div class="entry-meta">2019</div></div>
+      <div class="entry"><div class="entry-main">Fellow, Royal Society for Arts (RSA)</div><div class="entry-meta">2023–present</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">selected talks</span>
+      <div class="entry"><div class="entry-main">"Learning Like a Forest" workshop, with Penny Hay — Creative Learning Festival, Playlab, Milan</div><div class="entry-meta">Oct 2025</div></div>
+      <div class="entry"><div class="entry-main">Mainstage Ignite talk, with Amos Blanton — Museo Leonardo da Vinci, Milan</div><div class="entry-meta">2024</div></div>
+      <div class="entry"><div class="entry-main">"Forest of Imagination" session, We Will Dance with Mountains (Bayo Akomolafe) — with Penny Hay and Hanna McDowall</div><div class="entry-meta">2023</div></div>
+      <div class="entry"><div class="entry-main">UCL Centre for Holocaust Education and Human Rights — "The Living Tree and Circle at The Egg Theatre"</div><div class="entry-meta">2022</div></div>
+      <div class="entry"><div class="entry-main">Ecologies in Practice panel, Goldsmiths — with Esther Sayers, Penny Hay, Alexandre Mballa-Ekobena</div><div class="entry-meta">2021</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">press</span>
+      <div class="entry"><div class="entry-main"><a href="https://dorsetlife.co.uk/forest-cathedral-installation-opens-at-messums-west-ahead-of-public-launch/" target="_blank" rel="noopener">Dorset Life</a> — "Forest Cathedral installation opens at Messums West ahead of public launch"</div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.ilgiornale.it/news/arte/playlab-grande-novit-i-pi-piccoli-museo-nazionale-scienza-e-2429073.html" target="_blank" rel="noopener">Il Giornale</a> — national coverage of the Playlab / MUST opening<span class="entry-note">Italian</span></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.ilgiorno.it/milano/cronaca/playlab-museo-bambini-epnyewoz" target="_blank" rel="noopener">Il Giorno</a> — national coverage of the Playlab / MUST opening<span class="entry-note">Italian</span></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.focusjunior.it/musei/la-scienza-e-un-gioco-con-playlab-il-primo-museo-della-scienza-per-i-bambini/" target="_blank" rel="noopener">FocusJunior</a> (Mondadori) — national children's magazine feature<span class="entry-note">Italian</span></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://designdiffusion.com/en/2024/12/23/playlab-the-world-of-science-for-young-minds/" target="_blank" rel="noopener">Design Diffusion</a> — "PLAYLAB: the world of science for young minds"</div></div>
+      <div class="entry"><div class="entry-main"><a href="https://landezine-award.com/forest-of-imagination-assemble-in-the-forest/" target="_blank" rel="noopener">Landezine International Landscape Award</a> — "Forest of Imagination – Assemble in the Forest"</div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.bathecho.co.uk/news/community/forest-of-imagination-event-assembly-rooms-102340/" target="_blank" rel="noopener">Bath Echo</a> — "Forest of Imagination arts event to take over the Assembly Rooms"</div></div>
+      <div class="entry"><div class="entry-main"><a href="https://thestudioinbath.co.uk/the-living-tree/" target="_blank" rel="noopener">The Studio in Bath</a> — "The Living Tree: Forest of Imagination"</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">affiliations</span>
+      <div class="entry"><div class="entry-main">MASER (Material : Art : Science : Environment : Research), Bath Spa University</div><div class="entry-meta">since 2023</div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">education</span>
+      <div class="entry"><div class="entry-main">Bachelor of Fine Arts, Boston University</div><div class="entry-meta">1994–1997</div></div>
+    </section>
+
+  </main>
+
+</body>
+</html>
