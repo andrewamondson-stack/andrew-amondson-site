@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Amondson — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --ink: #1c1914;
+    --ink-soft: rgba(28,25,20,0.62);
+    --ink-faint: rgba(28,25,20,0.4);
+    --line: rgba(28,25,20,0.14);
+    --warm-white: rgba(250, 245, 235, 0.96);
+    --dark: #14120e;
+    --vh: 1vh;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  }
+
+  /* ---------- Top nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(18px, 3vw, 32px) clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wordmark-link {
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px);
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(16px, 2.2vw, 32px);
+  }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--ink);
+  }
+
+  nav a.current {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Content ---------- */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(48px, 8vh, 96px) clamp(20px, 5vw, 40px) clamp(80px, 12vh, 140px);
+  }
+
+  .bio h1 {
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    font-size: clamp(30px, 4.4vw, 44px);
+    letter-spacing: 0.005em;
+  }
+
+  .bio p {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 640px;
+  }
+
+  section.cv-section {
+    margin-top: clamp(48px, 7vh, 76px);
+  }
+
+  .section-label {
+    display: block;
+    font-weight: 400;
+    font-size: clamp(12px, 0.95vw, 14px);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .entry-main {
+    flex: 1;
+    font-weight: 400;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.5;
+  }
+
+  .entry-main a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .entry-main a:hover {
+    text-decoration-color: var(--ink);
+  }
+
+  .entry-meta {
+    flex-shrink: 0;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    color: var(--ink-soft);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .entry-note {
+    display: block;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 14.5px);
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 560px) {
+    .entry {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .entry-meta {
+      text-align: left;
+    }
+    nav { gap: 14px; }
+  }
+
+  /* ---------- About ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 5vh, 48px);
+  }
+  .portrait {
+    margin: 0;
+  }
+  .portrait-placeholder {
+    aspect-ratio: 4 / 5;
+    max-width: 320px;
+    background: rgba(28,25,20,0.06);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+  .portrait img {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+  }
+  .about-text p {
+    margin: 0 0 1.1em 0;
+    font-weight: 300;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.65;
+    max-width: 640px;
+  }
+  .about-text p.lead {
+    font-size: clamp(18px, 1.9vw, 22px);
+    line-height: 1.55;
+  }
+  .about-text a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 3px;
+  }
+  .about-text a:hover { text-decoration-color: var(--ink); }
+
+  #contact {
+    margin-top: clamp(56px, 9vh, 96px);
+    scroll-margin-top: 24px;
+  }
+  #contact p {
+    margin: 0 0 10px 0;
+    font-weight: 300;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  #contact .email {
+    font-weight: 400;
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 5px;
+  }
+  #contact .email:hover { text-decoration-color: var(--ink); }
+
+  @media (min-width: 820px) {
+    main.about-main { max-width: 980px; }
+    .about-grid { grid-template-columns: 320px minmax(0, 1fr); gap: clamp(40px, 6vw, 80px); align-items: start; }
+  }
+  html { scroll-padding-top: 80px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a class="wordmark-link" href="index.html">Andrew Amondson</a>
+    <nav>
+      <a href="index.html#projects">projects</a>
+      <a href="cv.html">cv</a>
+      <a href="about.html" class="current">about</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </header>
+
+  <main class="about-main">
+
+    <div class="about-grid">
+
+      <figure class="portrait">
+        <!-- When the new portrait is ready, save it as images/portrait.jpg and swap the placeholder below for:
+             <img src="images/portrait.jpg" alt="Portrait of Andrew Amondson"> -->
+        <div class="portrait-placeholder">portrait to come</div>
+      </figure>
+
+      <div class="about-text">
+        <p class="lead">In summer 2025, at Dinton Pastures Country Park in Wokingham, yarn ran from the trees to seventeen coppiced willow branches, one for each of the town's seventeen parishes. It was a temporary participatory sculpture called <em>Woven Together</em>.</p>
+
+        <p>Andrew Amondson is an American-born artist and filmmaker based in Berlin. He grew up in the Pacific Northwest, exploring old-growth forests as a child. His work creates the conditions for connection, through installation, walking, and film.</p>
+
+        <p>He has been a member of Studio Olafur Eliasson since 2017 and collaborates on EER, the art-and-science research project led by Olafur Eliasson and Andreas Roepstorff of Aarhus University. Since 2021 he has been Lead Artist at Forest of Imagination in Bath, where the Living Tree Mirror Maze won the Inspire Future Generations Award in 2022. With Penny Hay he co-wrote a chapter on Forest of Imagination and the Living Tree in <em>Ecologies in Practice and Learning</em> (Palgrave Macmillan, 2026). He is a Fellow of the Royal Society for Arts.</p>
+
+        <p><em>Walking With</em> is a walking practice he began long before those collaborations. It grew within creative walks with Olafur Eliasson and the studio team, and with Netflix and the Berlinale, and is now an art-and-science practice of its own.</p>
+
+        <p>As a filmmaker he directed <em>Restoring Time</em>, a documentary about Wim Wenders, and produced and directed the making-of documentary for Netflix's <em>1899</em>.</p>
+
+        <p><a href="cv.html">Full CV</a></p>
+      </div>
+
+    </div>
+
+    <section id="contact">
+      <span class="section-label">contact</span>
+      <p>For commissions, collaborations, or to arrange a walk, write to</p>
+      <p><a class="email" href="mailto:andrewamondson@gmail.com">andrewamondson@gmail.com</a></p>
+    </section>
+
+  </main>
+
+</body>
+</html>

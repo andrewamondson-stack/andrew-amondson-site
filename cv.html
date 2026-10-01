@@ -31,6 +31,10 @@
 
   /* ---------- Top nav ---------- */
   header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -165,6 +169,7 @@
     }
     nav { gap: 14px; }
   }
+  html { scroll-padding-top: 80px; }
 </style>
 </head>
 <body>
@@ -174,8 +179,8 @@
     <nav>
       <a href="index.html#projects">projects</a>
       <a href="#" class="current">cv</a>
-      <a href="#">about</a>
-      <a href="#">contact</a>
+      <a href="about.html">about</a>
+      <a href="about.html#contact">contact</a>
     </nav>
   </header>
 
@@ -201,6 +206,14 @@
 
       <div class="entry">
         <div class="entry-main">
+          Collective Day Dreaming — Forest of Imagination, Entry Hill, Bath
+          <span class="entry-note">installation and workshop</span>
+        </div>
+        <div class="entry-meta">2026</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-main">
           <a href="https://dorsetlife.co.uk/forest-cathedral-installation-opens-at-messums-west-ahead-of-public-launch/" target="_blank" rel="noopener">Forest Cathedral</a> — Messums West, Wiltshire
           <span class="entry-note">touring to Winchester Cathedral, Feb 2027</span>
         </div>
@@ -212,7 +225,7 @@
       <div class="entry"><div class="entry-main">Walking With Our Future Ideas — Festival of Future Nows, Neue Nationalgalerie, Berlin</div><div class="entry-meta">2025</div></div>
       <div class="entry"><div class="entry-main">Woven Together — Dinton Pastures Country Park, Wokingham</div><div class="entry-meta">2025</div></div>
       <div class="entry"><div class="entry-main">Precious — The Scale of Water (group), Michael Penny Gallery, Bath</div><div class="entry-meta">2024</div></div>
-      <div class="entry"><div class="entry-main">Where We Find Ourselves — permanent installation, Museo Leonardo da Vinci Playlab, Milan</div><div class="entry-meta">2024</div></div>
+      <div class="entry"><div class="entry-main">Where We Find Ourselves — permanent installation, Museum of Science and Technology Leonardo da Vinci, Playlab, Milan</div><div class="entry-meta">2024</div></div>
 
       <div class="entry">
         <div class="entry-main"><a href="https://www.bathecho.co.uk/news/community/forest-of-imagination-event-assembly-rooms-102340/" target="_blank" rel="noopener">Wondering Ways</a> — National Trust Bath Assembly Rooms</div>
@@ -239,7 +252,7 @@
       <span class="section-label">permanent collections</span>
       <div class="entry"><div class="entry-main">Living Tree — Reflection — Bishopstrow Hotel</div><div class="entry-meta">2025 / installed 2026</div></div>
       <div class="entry"><div class="entry-main">Walking With — Dinton Pastures Country Park, Wokingham</div><div class="entry-meta">2025</div></div>
-      <div class="entry"><div class="entry-main">Where We Find Ourselves — Museo Leonardo da Vinci Playlab, Milan</div><div class="entry-meta">2024</div></div>
+      <div class="entry"><div class="entry-main">Where We Find Ourselves — Museum of Science and Technology Leonardo da Vinci, Playlab, Milan</div><div class="entry-meta">2024</div></div>
     </section>
 
     <section class="cv-section">
@@ -251,6 +264,9 @@
 
     <section class="cv-section">
       <span class="section-label">publications</span>
+      <div class="entry">
+        <div class="entry-main">Amondson, A. (2026). "Wondering Ways: the art of living installations and Walking With." In <em>Future Flow: Imagine the possibilities</em>, A. Carey and P. Hay. Bath Spa University Press, p. 39. ISBN 978-1-7394822-0-6</div>
+      </div>
       <div class="entry">
         <div class="entry-main">Hay, P. and Amondson, A. (2026). "Forest of Imagination and the Living Tree." In <em>Ecologies in Practice and Learning: Arts Interventions in the Earth Crisis</em>, ed. M. Matthews. Palgrave Macmillan, pp. 203–218. ISBN 9783031823374</div>
       </div>
@@ -266,7 +282,7 @@
     <section class="cv-section">
       <span class="section-label">selected talks</span>
       <div class="entry"><div class="entry-main">"Learning Like a Forest" workshop, with Penny Hay — Creative Learning Festival, Playlab, Milan</div><div class="entry-meta">Oct 2025</div></div>
-      <div class="entry"><div class="entry-main">Mainstage Ignite talk, with Amos Blanton — Museo Leonardo da Vinci, Milan</div><div class="entry-meta">2024</div></div>
+      <div class="entry"><div class="entry-main">Mainstage Ignite talk, with Amos Blanton — Museum of Science and Technology Leonardo da Vinci, Milan</div><div class="entry-meta">2024</div></div>
       <div class="entry"><div class="entry-main">"Forest of Imagination" session, We Will Dance with Mountains (Bayo Akomolafe) — with Penny Hay and Hanna McDowall</div><div class="entry-meta">2023</div></div>
       <div class="entry"><div class="entry-main">UCL Centre for Holocaust Education and Human Rights — "The Living Tree and Circle at The Egg Theatre"</div><div class="entry-meta">2022</div></div>
       <div class="entry"><div class="entry-main">Ecologies in Practice panel, Goldsmiths — with Esther Sayers, Penny Hay, Alexandre Mballa-Ekobena</div><div class="entry-meta">2021</div></div>

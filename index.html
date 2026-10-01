@@ -76,14 +76,70 @@
     z-index: 1;
   }
 
+  /* Menu bar: transparent over the hero, solid once you scroll past it */
+  html, body { scroll-padding-top: 56px; }
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 56px);
+    transition: background 0.3s ease, padding 0.3s ease;
+  }
+
+  .topbar.scrolled {
+    background: rgba(20,18,14,0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .bar-mark {
+    color: var(--warm-white);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: clamp(14px, 1.3vw, 17px);
+    letter-spacing: 0.01em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .topbar.scrolled .bar-mark {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   nav {
-    position: absolute;
-    top: clamp(20px, 3vw, 40px);
-    right: clamp(20px, 4vw, 56px);
     display: flex;
     gap: clamp(18px, 2.2vw, 32px);
-    z-index: 2;
+    margin-left: auto;
   }
+
+  /* ---------- Mute button (appears while a video with sound is playing) ---------- */
+  .mute-btn {
+    position: fixed;
+    right: clamp(16px, 3vw, 32px);
+    bottom: clamp(16px, 3vw, 32px);
+    z-index: 40;
+    background: rgba(20,18,14,0.82);
+    color: var(--warm-white);
+    border: 1px solid rgba(250,245,235,0.4);
+    border-radius: 999px;
+    padding: 9px 20px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+  .mute-btn[hidden] { display: none; }
 
   nav a {
     color: rgba(250,245,235,0.82);
@@ -911,17 +967,22 @@
 </head>
 <body>
 
+  <div class="topbar" id="topbar">
+    <a class="bar-mark" href="index.html">Andrew Amondson</a>
+    <nav>
+      <a href="#projects">projects</a>
+      <a href="cv.html">cv</a>
+      <a href="about.html">about</a>
+      <a href="about.html#contact">contact</a>
+    </nav>
+  </div>
+
+  <button class="mute-btn" id="muteBtn" type="button" aria-pressed="false" hidden>mute</button>
+
   <section class="hero">
     <video autoplay muted loop playsinline preload="auto">
       <source src="video/hero-forest-cathedral-loop.mp4" type="video/mp4">
     </video>
-
-    <nav>
-      <a href="#projects">projects</a>
-      <a href="cv.html">cv</a>
-      <a href="#about">about</a>
-      <a href="#contact">contact</a>
-    </nav>
 
     <h1 class="wordmark">Andrew Amondson</h1>
 
@@ -1316,6 +1377,54 @@
         });
       });
     });
+
+    // Menu bar: solid background once the hero has scrolled away
+    (function () {
+      var bar = document.getElementById('topbar');
+      var hero = document.querySelector('.hero');
+      function updateBar() {
+        var limit = hero ? hero.offsetHeight - 80 : 200;
+        // On this page the <body> is the scrolling element, so read every candidate.
+        var y = Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
+        bar.classList.toggle('scrolled', y > limit);
+      }
+      window.addEventListener('scroll', updateBar, { passive: true });
+      document.body.addEventListener('scroll', updateBar, { passive: true });
+      window.addEventListener('resize', updateBar);
+      updateBar();
+    })();
+
+    // Mute button: visible whenever a video with sound is playing, wherever
+    // the visitor is on the page (Forest Cathedral keeps playing as they swipe on).
+    (function () {
+      var btn = document.getElementById('muteBtn');
+      var vids = Array.prototype.slice.call(document.querySelectorAll('video.fg-video'));
+      function playing() {
+        return vids.filter(function (v) { return !v.paused && !v.ended; });
+      }
+      function update() {
+        var p = playing();
+        var promptShowing = document.querySelector('.sound-btn:not([hidden])');
+        if (!p.length || promptShowing) { btn.hidden = true; return; }
+        var anyLoud = p.some(function (v) { return !v.muted; });
+        btn.hidden = false;
+        btn.textContent = anyLoud ? 'mute' : 'unmute';
+        btn.setAttribute('aria-pressed', anyLoud ? 'false' : 'true');
+      }
+      btn.addEventListener('click', function () {
+        var p = playing();
+        var anyLoud = p.some(function (v) { return !v.muted; });
+        vids.forEach(function (v) { v.muted = anyLoud; });
+        update();
+      });
+      vids.forEach(function (v) {
+        ['play', 'pause', 'ended', 'volumechange'].forEach(function (ev) {
+          v.addEventListener(ev, update);
+        });
+      });
+      setInterval(update, 500);
+      update();
+    })();
 
     // Tap-for-sound buttons (scoped to whichever slide they're in)
     document.querySelectorAll('.sound-btn').forEach(function (btn) {
