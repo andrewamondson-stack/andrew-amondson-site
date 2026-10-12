@@ -247,8 +247,16 @@
   /* ---------- Carousel ---------- */
   .carousel-section {
     background: var(--dark);
-    padding: 0 0 clamp(20px, 3vh, 32px) 0;
+    /* generous dark gap between projects so no neighbour shows when one is snapped in view */
+    padding: clamp(48px, 9vh, 120px) 0;
   }
+
+  /* Gentle page snap: each project settles centred in the window.
+     The body is the scroll container on this page. Snap is switched on by a small
+     script only once you reach Forest Cathedral, so the hero and quote scroll freely. */
+  body.snap-on { scroll-snap-type: y mandatory; }
+  .quote { scroll-snap-align: start; }
+  .carousel-wrap { scroll-snap-align: center; }
 
   .carousel-wrap {
     width: 100%;
@@ -829,6 +837,97 @@
     text-align: center;
   }
 
+
+
+  /* Living Tree cover: pan down to show the ferns, lighter scrim so they stay visible */
+  .slide.cover-slide.lt-cover > img:not(.bg):not(.fg) { object-position: 50% 100%; }
+  .slide.cover-slide.lt-cover::after {
+    background: linear-gradient(to top, rgba(10,9,7,0.42) 0%, rgba(10,9,7,0.12) 30%, transparent 50%);
+  }
+
+
+
+  /* Living Tree cycle illustration: white page, drawing as large as the frame allows */
+  .slide.illustration-slide { background: #ffffff; }
+  .slide.illustration-slide img.fg { padding: clamp(8px, 1.6vh, 20px) clamp(12px, 2vw, 28px); }
+
+
+  /* Photo on the left, quote in a black panel on the right */
+  .slide.text-card.photo-quote {
+    padding: 0;
+    background: #000;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  .slide.photo-quote .pq-photo-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+  }
+  .slide.photo-quote .pq-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 55%;
+    display: block;
+  }
+  .slide.photo-quote .photo-credit {
+    position: absolute;
+    left: clamp(12px, 1.6vw, 20px);
+    bottom: clamp(10px, 1.6vh, 18px);
+    margin: 0;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(11px, 1vw, 13px);
+    letter-spacing: 0.02em;
+    color: var(--warm-white);
+    opacity: 0.8;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+    text-align: left;
+  }
+  .slide.photo-quote .pq-quote {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    padding: clamp(24px, 6vw, 96px);
+  }
+  .slide.photo-quote .pq-quote > div { max-width: 32rem; }
+  @media (max-width: 560px) {
+    .slide.text-card.photo-quote { flex-direction: column; }
+    .slide.photo-quote .pq-photo-wrap { width: 100%; height: 58%; aspect-ratio: auto; }
+    .slide.photo-quote .pq-quote { padding: 20px 24px; }
+  }
+
+  /* Living Tree: caption on the film slide + attribution line on quote card */
+  .video-caption {
+    position: absolute;
+    left: clamp(20px, 4vw, 48px);
+    bottom: clamp(20px, 4vh, 40px);
+    z-index: 3;
+    margin: 0;
+    color: var(--warm-white);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(13px, 1.2vw, 15px);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+  .slide.text-card p.attrib {
+    margin-top: 1.4em;
+    font-size: clamp(13px, 1.5vw, 16px);
+    opacity: 0.72;
+  }
+  /* Forest Cathedral: the visitor line sits under the quote, lined up with its right edge */
+  #projects .slide.text-card p.attrib { text-align: right; margin-top: 0.7em; }
+  #projects .slide.text-card p.attrib.attrib-sm { font-size: clamp(11px, 1.15vw, 13px); }
+  @media (max-width: 560px) {
+    .video-caption { bottom: auto; top: 16px; left: 16px; right: 16px; }
+  }
+
   .slide.ig-slide {
     display: flex;
     flex-direction: column;
@@ -1030,7 +1129,10 @@
           </div>
 
           <div class="slide text-card">
-            <p>"Transcendent."</p>
+            <div>
+              <p>"Transcendent."</p>
+              <p class="attrib attrib-sm">&ndash; Messums Visitor</p>
+            </div>
           </div>
 
           <div class="slide">
@@ -1059,7 +1161,10 @@
           </div>
 
           <div class="slide text-card">
-            <p>"Extraordinarily Peaceful &amp; Introspective."</p>
+            <div>
+              <p>"Extraordinarily Peaceful &amp; Introspective."</p>
+              <p class="attrib">&ndash; Messums Visitor</p>
+            </div>
           </div>
 
           <div class="slide">
@@ -1078,7 +1183,10 @@
           </div>
 
           <div class="slide text-card">
-            <p>"If churches were like this, I would go more often."</p>
+            <div>
+              <p>"If churches were like this, I would go more often."</p>
+              <p class="attrib">&ndash; Messums Visitor</p>
+            </div>
           </div>
 
           <div class="slide">
@@ -1297,46 +1405,124 @@
             <img class="fg" src="images/milan/02-large-nest.jpg" alt="A large woven nest holding soft stones in the foreground, with tree-shaped arches and a smaller nest of mirrored eggs beyond">
           </div>
 
-          <div class="slide">
-            <img class="bg" src="images/milan/03-silver-eggs.jpg" alt="">
-            <img class="fg" src="images/milan/03-silver-eggs.jpg" alt="Three mirrored eggs in a woven nest in the foreground, with a second nest and an orange doorway beyond">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/09-eggs-from-above.jpg" alt="">
-            <img class="fg" src="images/milan/09-eggs-from-above.jpg" alt="Three mirrored eggs in a woven nest seen from above, reflecting the room and its visitors">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/06-child-touching-eggs.jpg" alt="">
-            <img class="fg" src="images/milan/06-child-touching-eggs.jpg" alt="A child reaches into a large woven nest and rests his hands on mirrored eggs">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/07-child-leaning-into-nest.jpg" alt="">
-            <img class="fg" src="images/milan/07-child-leaning-into-nest.jpg" alt="A child leans over the edge of the nest to look closely at the mirrored eggs">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/08-two-children-at-nest.jpg" alt="">
-            <img class="fg" src="images/milan/08-two-children-at-nest.jpg" alt="Two children lean over the nest together, one reaching for a mirrored egg">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/04-leaf-shadows.jpg" alt="">
-            <img class="fg" src="images/milan/04-leaf-shadows.jpg" alt="Shadows of leaves on a blue-green wall">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/milan/05-touching-the-eggs.jpg" alt="">
-            <img class="fg" src="images/milan/05-touching-the-eggs.jpg" alt="A man sits beside a large woven nest and rests his hands on two mirrored eggs, against a green wall with leaf shadows">
-          </div>
-
           <a class="slide ig-slide" href="https://www.instagram.com/p/DDHFdI6IuD2/" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
+            </svg>
+            <span>to watch the film</span>
+          </a>
+
+        </div>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- Living Tree gallery -->
+  <section class="carousel-section" id="living-tree">
+    <div class="carousel-wrap">
+      <div class="carousel-frame">
+        <div class="carousel-track">
+
+          <div class="slide cover-slide lt-cover">
+            <img src="images/living-tree/living-tree-hero.jpg" alt="The Living Tree at The Egg, Theatre Royal Bath: a tall tepee of bare poles ringed with ferns, with glowing green and blue orbs hanging in the dark space around it">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>The Living Tree</h2>
+              <p>2021–2026<br>Winner of the Inspire Future Generations Prize, 2022</p>
+              <div class="detail">
+                <p>Originally developed for Rockefeller Center in New York, the Living Tree is a scalable Christmas tree for public spaces, made up of smaller potted trees that are planted after the holidays, taking a familiar form and filling it with new meaning. Inside, the city fades and visitors are transported by their senses to an old growth forest via soundscape, smell, and soft forest floor underfoot. After the de-installation, the potted trees are planted in small, self-sustaining urban forests co-developed through community narratives.</p>
+                <p>The educational outreach and forest pedagogy for the project were developed in collaboration with Forest of Imagination, with installations at The Egg at Theatre Royal Bath and Entry Hill.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide illustration-slide">
+            <img class="fg" src="images/living-tree/living-tree-cycle.jpg" alt="Illustration of the Living Tree cycle in four steps. Potted trees are installed in the Living Tree for the holidays. Pots for the young trees are donated by individuals, families and businesses. The geo-tagged trees are planted in community-planned, ultra-dense, biodiverse mini-forests in urban areas using native species. Using the Miyawaki method of afforestation, these self-sustaining forests grow ten times faster.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-video-poster.jpg" alt="">
+            <video class="fg-video" loop playsinline preload="auto" poster="images/living-tree/living-tree-video-poster.jpg">
+              <source src="video/living-tree.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+            <p class="video-caption">Shortlisted for the Lexus Design Award 2019</p>
+          </div>
+
+          <div class="slide text-card photo-quote">
+            <div class="pq-photo-wrap">
+              <img class="pq-photo" src="images/living-tree/living-tree-visitor-and-child.jpg" alt="A child and an adult crouching beside them, seen from behind, look toward the Living Tree: a tepee of bare poles in a dark hall, ringed with ferns, with pale spheres hanging around it and bright light behind.">
+              <p class="photo-credit">Photo: Charlotte Piddington</p>
+            </div>
+            <div class="pq-quote">
+              <div>
+                <p>"It's so interesting to think about how we used to frame forests as scary, dangerous places – and are now telling such a different story of care taking. I can't think of anything I've seen that expresses that better – or with more delight."</p>
+                <p class="attrib">Margaret Heffernan, author of <em>Embracing Uncertainty</em></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide cover-slide">
+            <img src="images/living-tree/living-tree-01-girls-look-up.jpg" alt="Two girls, seen from behind, look up into the Living Tree, a tepee of bare poles lit in deep blue, with bright light at the left.">
+            <div class="slide-text">
+              <h2>Living Tree Mirror Maze</h2>
+              <p>2022 Inspire Future Generations Prize</p>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="Close view of the Living Tree's bare poles in deep blue and violet light, with a few dry branches at the left.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-tepee-base.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-tepee-base.jpg" alt="The base of the Living Tree: bare poles rising from mounds of moss and ferns in low warm light.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-03-moss.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-03-moss.jpg" alt="Two girls crouch in the dark beside a patch of moss inside the Living Tree, lit in violet.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-06-light-above.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-06-light-above.jpg" alt="Looking straight up inside the Living Tree: a beam of light falls through a ring of bare poles.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="Two children stand among poles and moss inside the Living Tree, holding a softly glowing white sphere between them.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="Looking through the bare poles of the Living Tree at curtains of small warm lights hanging in the dark.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="An adult and a small child lean in to touch a mossy stump with a young fern growing from it, lit in a pool of light in the dark hall.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-07-doorway.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-07-doorway.jpg" alt="Two young children with small backpacks stand in a doorway framed by moss and ferns.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="">
+            <img class="fg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="Looking up through the poles of the Living Tree, with warm points of light glowing between them.">
+          </div>
+
+          <a class="slide ig-slide" href="https://vimeo.com/showcase/10144338" target="_blank" rel="noopener">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M10 8.2v7.6l6-3.8-6-3.8z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
             </svg>
             <span>to watch the film</span>
           </a>
@@ -1676,6 +1862,46 @@
   </script>
 
   <script>
+/* Page snap starts at Forest Cathedral. Above it the page scrolls freely.
+   The quote is a snap point too, so scrolling up from the first project glides out to it,
+   and the snap switches itself off as soon as you are above Forest Cathedral. */
+(function () {
+  var body = document.body, proj = document.getElementById('projects');
+  if (!proj) return;
+  function update() {
+    var top = proj.getBoundingClientRect().top + body.scrollTop;
+    body.classList.toggle('snap-on', body.scrollTop >= top - 4);
+  }
+  body.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+<script>
+/* Forest Cathedral quotes: the visitor line ends under the last letter of the quote,
+   not under the closing full stop and quotation mark. */
+(function () {
+  function align() {
+    document.querySelectorAll('#projects .slide.text-card').forEach(function (card) {
+      var q = card.querySelector('p:not(.attrib)'), a = card.querySelector('.attrib');
+      if (!q || !a) return;
+      var node = q.firstChild;
+      if (!node || node.nodeType !== 3) return;
+      var txt = node.nodeValue, m = txt.match(/[^\p{L}\p{N}]+$/u);
+      if (!m) { a.style.paddingRight = '0px'; return; }
+      var r = document.createRange();
+      r.setStart(node, txt.length - m[0].length);
+      r.setEnd(node, txt.length);
+      a.style.paddingRight = r.getBoundingClientRect().width + 'px';
+    });
+  }
+  window.addEventListener('load', align);
+  window.addEventListener('resize', align);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+  align();
+})();
+</script>
+<script>
   (function () {
     var PEN = { teal: "#1F8F6D", cobalt: "#2A4FC4", coral: "#C1443B" };
 
