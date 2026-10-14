@@ -902,6 +902,33 @@
     .slide.photo-quote .pq-quote { padding: 20px 24px; }
   }
 
+
+
+  /* Collective Daydreaming cover: keep the long hammock in view */
+  .slide.cover-slide.foi-daydreaming > img { object-position: 50% 86%; }
+
+  /* Big Pink Caterpillar cover: keep the pink tunnel in the band the frame shows */
+  .slide.cover-slide.foi-caterpillar > img { object-position: 50% 74%; }
+
+  /* Forest of Imagination cover: a busy drawing, so a stronger shade behind the words */
+  .slide.cover-slide.foi-cover > img { object-position: 50% 58%; }
+  .slide.cover-slide.foi-cover::after {
+    background: linear-gradient(to top, rgba(10,9,7,0.88) 0%, rgba(10,9,7,0.72) 30%, rgba(10,9,7,0.28) 58%, transparent 80%);
+  }
+  .slide.foi-cover .slide-text { text-shadow: 0 1px 14px rgba(0,0,0,0.6); }
+
+  /* Forest of Imagination frame: small line above the title on the first slide */
+  .slide-text .kicker {
+    display: block;
+    margin: 0 0 0.7em;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(13px, 1.3vw, 16px);
+    letter-spacing: 0.03em;
+    color: var(--warm-white);
+    opacity: 0.82;
+  }
+
   /* Living Tree: caption on the film slide + attribution line on quote card */
   .video-caption {
     position: absolute;
@@ -1405,6 +1432,11 @@
             <img class="fg" src="images/milan/02-large-nest.jpg" alt="A large woven nest holding soft stones in the foreground, with tree-shaped arches and a smaller nest of mirrored eggs beyond">
           </div>
 
+          <div class="slide">
+            <img class="bg" src="images/milan/03-silver-eggs.jpg" alt="">
+            <img class="fg" src="images/milan/03-silver-eggs.jpg" alt="Three mirrored eggs in a woven nest in the foreground, with a second nest and an orange doorway beyond">
+          </div>
+
           <a class="slide ig-slide" href="https://www.instagram.com/p/DDHFdI6IuD2/" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
@@ -1519,6 +1551,14 @@
             <img class="fg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="Looking up through the poles of the Living Tree, with warm points of light glowing between them.">
           </div>
 
+          <div class="slide">
+            <img class="bg" src="images/living-tree/living-tree-film-poster.jpg" alt="">
+            <video class="fg-video" playsinline preload="auto" poster="images/living-tree/living-tree-film-poster.jpg" aria-label="Film of the Living Tree Forest Mirror Maze at The Egg, Bath">
+              <source src="video/living-tree-film.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
           <a class="slide ig-slide" href="https://vimeo.com/showcase/10144338" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.4"/>
@@ -1526,6 +1566,146 @@
             </svg>
             <span>to watch the film</span>
           </a>
+
+        </div>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- Forest of Imagination gallery -->
+  <section class="carousel-section" id="forest-of-imagination">
+    <div class="carousel-wrap">
+      <div class="carousel-frame">
+        <div class="carousel-track">
+
+          <div class="slide cover-slide foi-hero">
+            <img src="images/forest-of-imagination/forest-of-imagination-hero.jpg" alt="A giant pale rabbit sits on a grassy hillside, seen through sheer blue fabric stretched across the foreground.">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>Forest of Imagination</h2>
+              <p>Selected installations and invitations, made as Lead Artist since 2021.</p>
+              <div class="detail">
+                <p>Forest of Imagination is an annual, free arts and architecture event in Bath. Each year it takes a familiar space in the city and reimagines it as a forest, to spark creativity and bring people closer to nature. It is run by House of Imagination with Grant Associates, Feilden Clegg Bradley Studios and Bath Spa University, together with Bath's creative, cultural and educational community.</p>
+                <p>Over the years it has taken over Queen Square, the spaces around Bath Abbey, the Assembly Rooms and the Holburne Museum and Gardens. Most recently it has taken root at Entry Hill, a forgotten green space the organisers hope will become a permanent Arts and Nature Park.</p>
+                <p>As Lead Artist since 2021, Andrew Amondson has made the installations and invitations that follow: places to step into, make in, walk through and wonder.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide cover-slide foi-waters-way">
+            <img src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="A long sheer ribbon of fabric sweeps across the frame against a purple dusk sky, with dark trees behind it.">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>The Water's Way</h2>
+              <p>Entry Hill and the American Museum &amp; Gardens, Bath, 2026.</p>
+              <div class="detail">
+                <p>Hundreds of meters of shimmering blue and white fabric billow and lift on the wind, daylighting the ancient Lyn Brook buried beneath Entry Hill. In urban planning, daylighting is the practice of bringing rivers back to the surface of towns and cities, unburying them from the dark tunnels in which they have been confined, and letting the water meet the sun again. Here, the brook returns not in water but in light and air and moving translucent fabric: a river conjured from memory, flowing once more across the hillside.</p>
+                <p>The work invites soft fascination; attention held without effort, the kind that doesn't deplete but restores. Let your gaze follow the ribbon of fabric as it lifts and falls. Let it drift. The mind, given permission to wander, begins quietly to recover.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/waters-way-04-clip-poster.jpg" alt="">
+            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/waters-way-04-clip-poster.jpg" aria-label="A ribbon of blue fabric lifting and falling in the wind over tall grass, with dark trees behind">
+              <source src="video/waters-way-2.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="A child runs through long grass beneath a billowing sheet of pale blue fabric held up on canes, the fabric stretching away across the meadow.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/waters-way-03-clip-poster.jpg" alt="">
+            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/waters-way-03-clip-poster.jpg" aria-label="Blue fabric rippling in the wind above a meadow, seen through a tree trunk and canes">
+              <source src="video/waters-way-1.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide cover-slide foi-caterpillar">
+            <img src="images/forest-of-imagination/big-pink-caterpillar-00-cover.jpg" alt="The long pink tunnel of The Big Pink Caterpillar curving away across a grassy slope under a big sky, with the dark willow head of the caterpillar curving up on the left.">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>The Big Pink Caterpillar</h2>
+              <p>Entry Hill, Bath, 2025.</p>
+              <div class="detail">
+                <p>The Big Pink Caterpillar is a 50-meter-long tunnel sculpture crafted from coppiced willow and repurposed pink ripstop fabric, crawling playfully up the green landscape toward the future site of the Butterfly House designed by Feilden Clegg Bradley Studios. This whimsical land art installation embodies the long-term vision for the Entry Hill site as a destination where art, nature, and transformation converge.</p>
+                <p>At its heart, The Big Pink Caterpillar is a color experiment that fundamentally shifts visitors’ perception of place. As people journey through the pink-tinted tunnel, their visual adaptation recalibrates. Upon emergence, the greens appear impossibly greener, the natural world more vivid and alive. This phenomenological shift demonstrates how our perception of nature is not fixed but malleable, shaped by experience, context, and wonder.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="Children walk in a line beneath the long pink tunnel, their legs and feet visible under the fabric.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="A man in a green jacket and jeans stands in long grass with a checked scarf over his face, the pink tunnel behind him.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="Looking out through trees across a valley toward the houses and hills of Bath, with the pink caterpillar tunnel curving across a small meadow below.">
+          </div>
+
+          <div class="slide cover-slide foi-daydreaming">
+            <img src="images/forest-of-imagination/daydreaming-01-hammocks-cover.jpg" alt="Teal hammocks hung between the trunks of tall trees in a woodland grove.">
+            <div class="extra-scrim"></div>
+            <div class="slide-text">
+              <h2>Collective Daydreaming</h2>
+              <p>Entry Hill, Bath, 2026.</p>
+              <div class="detail">
+                <p>Twelve blue hammocks flow through a grove of trees on Entry Hill, connecting to the River of Dreams, the theme of Forest of Imagination in fall 2026. Collective Daydreaming asks visitors to do one thing: nothing. The hammocks cradle. Sound and light filter down through the leaves.</p>
+                <p>If something comes from the nothing, there are paper and markers to record it.</p>
+                <p>The work draws on Andrew Amondson's research into soft fascination, a key part of Attention Restoration Theory. Soft fascination holds our attention gently and lets the mind wander, restoring our depleted directed attention. Nature does this on its own. This drop-in intervention asks how we can design for it, and does something radical in return: it invites us to stop.</p>
+                <p>Like the other works in this frame, Collective Daydreaming is about creating the conditions for creative thinking, for the imagination to take root.</p>
+              </div>
+              <button class="read-more-btn" aria-expanded="false">read more</button>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-02-sign.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/daydreaming-02-sign.jpg" alt="A dark, round-topped sign reading 'Collective Daydreaming on Entry Hill' leans against a tree beside a woodland path, with hammocks, a dog and a child in the background.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="A blue hammock hangs between trees in a grove, with a pale golden dog sitting on the path beside it.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-03-clip-poster.jpg" alt="">
+            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/daydreaming-03-clip-poster.jpg" aria-label="A child sits in a teal hammock drawing on a clipboard, with more hammocks among the trees behind">
+              <source src="video/daydreaming.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-04-drawing.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/daydreaming-04-drawing.jpg" alt="A child lying back in a blue hammock holds up a clipboard with a blue crayon drawing of leaves against the trees.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-05-woman-in-hammock.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/daydreaming-05-woman-in-hammock.jpg" alt="An older woman in sunglasses lies in a blue and teal hammock slung between ivy-covered trees, with a meadow beyond.">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="A woman in sunglasses holds up a clipboard with her crayon drawing of a person lying in a hammock among red tree trunks.">
+          </div>
 
         </div>
       </div>
@@ -1870,7 +2050,7 @@
   if (!proj) return;
   function update() {
     var top = proj.getBoundingClientRect().top + body.scrollTop;
-    body.classList.toggle('snap-on', body.scrollTop >= top - 4);
+    body.classList.toggle('snap-on', body.scrollTop >= top - 64);
   }
   body.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
