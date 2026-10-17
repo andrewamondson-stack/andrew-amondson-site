@@ -47,6 +47,22 @@
     object-fit: cover;
   }
 
+
+  /* Fade up from black: hides the frozen first frame while the hero video loads */
+  .hero-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: #000;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 1.8s ease;
+    animation: heroFadeSafety 1.2s ease 7s forwards; /* safety net: never leaves the screen black */
+  }
+  .hero.is-ready .hero-fade { opacity: 0; animation: none; }
+  @keyframes heroFadeSafety { to { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .hero-fade { transition: none; } }
+
   .hero::before {
     content: "";
     position: absolute;
@@ -904,11 +920,22 @@
 
 
 
+
   /* Collective Daydreaming cover: keep the long hammock in view */
   .slide.cover-slide.foi-daydreaming > img { object-position: 50% 86%; }
 
   /* Big Pink Caterpillar cover: keep the pink tunnel in the band the frame shows */
   .slide.cover-slide.foi-caterpillar > img { object-position: 50% 74%; }
+
+  /* The Water's Way cover on a wide screen: sit the picture low so the title lands on the grass, not on the pale fabric */
+  @media (min-width: 701px) {
+    .slide.cover-slide.foi-waters-way > img { object-position: 50% 100%; }
+  }
+
+  /* On a phone the picture is cropped to a narrow slice: slide it so the head and front of the tunnel are in view */
+  @media (max-width: 700px) {
+    .slide.cover-slide.foi-caterpillar > img { object-position: 0% 74%; }
+  }
 
   /* Forest of Imagination cover: a busy drawing, so a stronger shade behind the words */
   .slide.cover-slide.foi-cover > img { object-position: 50% 58%; }
@@ -1109,6 +1136,7 @@
     <video autoplay muted loop playsinline preload="auto">
       <source src="video/hero-forest-cathedral-loop.mp4" type="video/mp4">
     </video>
+    <div class="hero-fade" aria-hidden="true"></div>
 
     <h1 class="wordmark">Andrew Amondson</h1>
 
@@ -1333,14 +1361,6 @@
           </div>
 
           <div class="slide">
-            <img class="bg" src="images/wondering-ways/wondering-ways-video-poster.jpg" alt="">
-            <video class="fg-video" playsinline preload="auto" poster="images/wondering-ways/wondering-ways-video-poster.jpg" data-continue-play="true">
-              <source src="video/wondering-ways.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
-          <div class="slide">
             <img class="bg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="">
             <img class="fg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="Through the open doors of the Ballroom, tall dry grass fills the room beneath a chandelier">
           </div>
@@ -1385,6 +1405,14 @@
             <img class="fg" src="images/wondering-ways/09-sunlit-seed-heads.jpg" alt="Sunlit grass seed heads in the foreground, with chandeliers and windows beyond">
           </div>
 
+          <div class="slide">
+            <img class="bg" src="images/wondering-ways/wondering-ways-video-poster.jpg" alt="">
+            <video class="fg-video" playsinline preload="auto" poster="images/wondering-ways/wondering-ways-video-poster.jpg" data-continue-play="true">
+              <source src="video/wondering-ways.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
           <a class="slide ig-slide" href="https://www.instagram.com/p/CurzLC2IgGl/" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
@@ -1393,7 +1421,6 @@
             </svg>
             <span>for a behind-the-scenes look</span>
           </a>
-
 
         </div>
       </div>
@@ -1443,7 +1470,7 @@
               <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
             </svg>
-            <span>to watch the film</span>
+            <span>watch preview</span>
           </a>
 
         </div>
@@ -1465,24 +1492,10 @@
               <h2>The Living Tree</h2>
               <p>2021–2026<br>Winner of the Inspire Future Generations Prize, 2022</p>
               <div class="detail">
-                <p>Originally developed for Rockefeller Center in New York, the Living Tree is a scalable Christmas tree for public spaces, made up of smaller potted trees that are planted after the holidays, taking a familiar form and filling it with new meaning. Inside, the city fades and visitors are transported by their senses to an old growth forest via soundscape, smell, and soft forest floor underfoot. After the de-installation, the potted trees are planted in small, self-sustaining urban forests co-developed through community narratives.</p>
-                <p>The educational outreach and forest pedagogy for the project were developed in collaboration with Forest of Imagination, with installations at The Egg at Theatre Royal Bath and Entry Hill.</p>
+                <p>The Living Tree Mirror Maze invited visitors and participants to walk through a geometric maze of mirrors into a living forest of sound, light and sensory experiences. The sound installation by musician Cosmo Sheldrake was composed using nine years of recorded amber-listed British birdsong, creating a beautiful and haunting soundscape for the Living Tree Forest. Designer Matthew Leece created a FUNgal network of connecting and communicating tubes to represent the concept of a mycelium network in the Egg Theatre café, inviting visitors into a deeper understanding of how the forest and humans are all connected, and to learn like a forest (Bateson 2023).</p>
               </div>
               <button class="read-more-btn" aria-expanded="false">read more</button>
             </div>
-          </div>
-
-          <div class="slide illustration-slide">
-            <img class="fg" src="images/living-tree/living-tree-cycle.jpg" alt="Illustration of the Living Tree cycle in four steps. Potted trees are installed in the Living Tree for the holidays. Pots for the young trees are donated by individuals, families and businesses. The geo-tagged trees are planted in community-planned, ultra-dense, biodiverse mini-forests in urban areas using native species. Using the Miyawaki method of afforestation, these self-sustaining forests grow ten times faster.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-video-poster.jpg" alt="">
-            <video class="fg-video" loop playsinline preload="auto" poster="images/living-tree/living-tree-video-poster.jpg">
-              <source src="video/living-tree.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-            <p class="video-caption">Shortlisted for the Lexus Design Award 2019</p>
           </div>
 
           <div class="slide text-card photo-quote">
@@ -1559,14 +1572,6 @@
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
           </div>
 
-          <a class="slide ig-slide" href="https://vimeo.com/showcase/10144338" target="_blank" rel="noopener">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M10 8.2v7.6l6-3.8-6-3.8z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-            </svg>
-            <span>to watch the film</span>
-          </a>
-
         </div>
       </div>
       <div class="carousel-dots"></div>
@@ -1588,14 +1593,14 @@
               <div class="detail">
                 <p>Forest of Imagination is an annual, free arts and architecture event in Bath. Each year it takes a familiar space in the city and reimagines it as a forest, to spark creativity and bring people closer to nature. It is run by House of Imagination with Grant Associates, Feilden Clegg Bradley Studios and Bath Spa University, together with Bath's creative, cultural and educational community.</p>
                 <p>Over the years it has taken over Queen Square, the spaces around Bath Abbey, the Assembly Rooms and the Holburne Museum and Gardens. Most recently it has taken root at Entry Hill, a forgotten green space the organisers hope will become a permanent Arts and Nature Park.</p>
-                <p>As Lead Artist since 2021, Andrew Amondson has made the installations and invitations that follow: places to step into, make in, walk through and wonder.</p>
+                <p>As Lead Artist since 2021, Andrew Amondson has made the installations and invitations that follow, inviting connection and wonder.</p>
               </div>
               <button class="read-more-btn" aria-expanded="false">read more</button>
             </div>
           </div>
 
           <div class="slide cover-slide foi-waters-way">
-            <img src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="A long sheer ribbon of fabric sweeps across the frame against a purple dusk sky, with dark trees behind it.">
+            <img src="images/forest-of-imagination/waters-way-00-blue-fabric.jpg" alt="Sheer pale blue fabric billows in the sunlight above a meadow, held up on canes, with dark trees and blue sky behind.">
             <div class="extra-scrim"></div>
             <div class="slide-text">
               <h2>The Water's Way</h2>
@@ -1627,6 +1632,11 @@
               <source src="video/waters-way-1.mp4" type="video/mp4">
             </video>
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="">
+            <img class="fg" src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="A long sheer ribbon of fabric sweeps across the frame against a purple dusk sky, with dark trees behind it.">
           </div>
 
           <div class="slide cover-slide foi-caterpillar">
@@ -1675,11 +1685,6 @@
           </div>
 
           <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-02-sign.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/daydreaming-02-sign.jpg" alt="A dark, round-topped sign reading 'Collective Daydreaming on Entry Hill' leans against a tree beside a woodland path, with hammocks, a dog and a child in the background.">
-          </div>
-
-          <div class="slide">
             <img class="bg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="A blue hammock hangs between trees in a grove, with a pale golden dog sitting on the path beside it.">
           </div>
@@ -1706,6 +1711,15 @@
             <img class="bg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="A woman in sunglasses holds up a clipboard with her crayon drawing of a person lying in a hammock among red tree trunks.">
           </div>
+
+          <a class="slide ig-slide" href="https://www.instagram.com/p/Dd4ALrgMNYV/" target="_blank" rel="noopener">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
+            </svg>
+            <span>to watch the film</span>
+          </a>
 
         </div>
       </div>
@@ -2079,6 +2093,28 @@
   window.addEventListener('resize', align);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
   align();
+})();
+</script>
+<script>
+/* Fade up from black once the hero video is really playing. */
+(function () {
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+  var v = hero.querySelector('video'), done = false, t0 = Date.now();
+  function reveal() { if (done) return; done = true; hero.classList.add('is-ready'); }
+  function soon() { setTimeout(reveal, Math.max(0, 400 - (Date.now() - t0))); }
+  if (!v || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) { reveal(); return; }
+  function onPlaying() {
+    if (v.currentTime > 0.05) { soon(); return; }
+    v.addEventListener('timeupdate', function tick() {
+      if (v.currentTime > 0.05) { v.removeEventListener('timeupdate', tick); soon(); }
+    });
+  }
+  v.addEventListener('playing', onPlaying, { once: true });
+  v.addEventListener('error', reveal);
+  var src = v.querySelector('source'); if (src) src.addEventListener('error', reveal);
+  if (!v.paused && v.readyState >= 3) onPlaying();
+  setTimeout(reveal, 6000); /* give up waiting after six seconds */
 })();
 </script>
 <script>
