@@ -198,7 +198,14 @@
     max-width: 320px;
     height: auto;
   }
-  .about-text p {
+  .portrait figcaption {
+margin-top: 10px;
+font-weight: 300;
+font-size: clamp(12px, 0.95vw, 13.5px);
+letter-spacing: 0.02em;
+color: var(--ink-faint);
+}
+.about-text p {
     margin: 0 0 1.1em 0;
     font-weight: 300;
     font-size: clamp(16px, 1.6vw, 19px);
@@ -217,7 +224,26 @@
   }
   .about-text a:hover { text-decoration-color: var(--ink); }
 
-  #contact {
+  .about-text blockquote.pullquote {
+margin: 1.8em 0 2em 0;
+padding: 0 0 0 1.3em;
+border-left: 1px solid var(--ink-faint);
+max-width: 600px;
+}
+.about-text blockquote.pullquote p {
+margin: 0 0 0.7em 0;
+font-size: clamp(18px, 1.9vw, 22px);
+line-height: 1.5;
+}
+.about-text blockquote.pullquote cite {
+display: block;
+font-style: normal;
+font-weight: 300;
+font-size: clamp(13px, 1vw, 15px);
+color: var(--ink-soft);
+letter-spacing: 0.02em;
+}
+#contact {
     margin-top: clamp(56px, 9vh, 96px);
     scroll-margin-top: 24px;
   }
@@ -262,23 +288,21 @@
     <div class="about-grid">
 
       <figure class="portrait">
-        <!-- When the new portrait is ready, save it as images/portrait.jpg and swap the placeholder below for:
-             <img src="images/portrait.jpg" alt="Portrait of Andrew Amondson"> -->
-        <div class="portrait-placeholder">portrait to come</div>
-      </figure>
+<img src="images/portrait.jpg" alt="Portrait of Andrew Amondson, seated outdoors in a garden with his hands clasped, wearing round glasses and a dark jacket." width="1100" height="1540">
+<figcaption>Photo: Juliane Eirich</figcaption>
+</figure>
 
       <div class="about-text">
-        <p class="lead">In summer 2025, at Dinton Pastures Country Park in Wokingham, yarn ran from the trees to seventeen coppiced willow branches, one for each of the town's seventeen parishes. It was a temporary participatory sculpture called <em>Woven Together</em>.</p>
-
-        <p>Andrew Amondson is an American-born artist and filmmaker based in Berlin. He grew up in the Pacific Northwest, exploring old-growth forests as a child. His work creates the conditions for connection, through installation, walking, and film.</p>
-
-        <p>He has been a member of Studio Olafur Eliasson since 2017 and collaborates on EER, the art-and-science research project led by Olafur Eliasson and Andreas Roepstorff of Aarhus University. Since 2021 he has been Lead Artist at Forest of Imagination in Bath, where the Living Tree Mirror Maze won the Inspire Future Generations Award in 2022. With Penny Hay he co-wrote a chapter on Forest of Imagination and the Living Tree in <em>Ecologies in Practice and Learning</em> (Palgrave Macmillan, 2026). He is a Fellow of the Royal Society for Arts.</p>
-
-        <p><em>Walking With</em> is a walking practice he began long before those collaborations. It grew within creative walks with Olafur Eliasson and the studio team, and with Netflix and the Berlinale, and is now an art-and-science practice of its own.</p>
-
-        <p>As a filmmaker he directed <em>Restoring Time</em>, a documentary about Wim Wenders, and produced and directed the making-of documentary for Netflix's <em>1899</em>.</p>
-
-        <p><a href="cv.html">Full CV</a></p>
+        <p class="lead">Andrew Amondson is an American artist known for large-scale kinetic and living installations reflecting on our connections to nature and one another.</p>
+<blockquote class="pullquote">
+<p>&ldquo;My work isn&rsquo;t about replacing the experience of being in nature; it is an invitation to reflect on our relationship with it and how, like a forest, we are all connected.&rdquo;</p>
+<cite>Andrew Amondson - Messums West</cite>
+</blockquote>
+<p>He is an American-born artist living in Berlin. He grew up in the Pacific Northwest, exploring old-growth forests as a child. He has been a member of Studio Olafur Eliasson since 2017, where he is also part of EER (Experimenting, Experiencing, Reflecting), a collaborative research initiative between Studio Olafur Eliasson and the Interacting Minds Centre at Aarhus University. His walking practice, <em>Walking With</em>, was developed into an art-science research project within the framework of the Studio and EER. As an adaptive walking score, it was part of the 2025 Festival of Future Nows at the Neue Nationalgalerie.</p>
+<p>Andrew has been a lead artist since 2021 with Forest of Imagination, an annual, award-winning contemporary arts and architecture event in Bath, UK, that transforms familiar urban or natural spaces into temporary, imaginative landscapes, and spaces for liberated learning. His Living Tree Mirror Maze received the Inspire Future Generations Award in London in 2022.</p>
+<p>His film work includes collaborations with Wim Wenders and the Berlin International Film Festival, and work as a director, producer and creative strategist for Netflix.</p>
+<p>Andrew is a Fellow of the Hawkwood Centre for Future Thinking and of the Royal Society of Arts.</p>
+<p><a href="cv.html">Full CV</a></p>
       </div>
 
     </div>
