@@ -47,22 +47,6 @@
     object-fit: cover;
   }
 
-
-  /* Fade up from black: hides the frozen first frame while the hero video loads */
-  .hero-fade {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: #000;
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity 1.8s ease;
-    animation: heroFadeSafety 1.2s ease 7s forwards; /* safety net: never leaves the screen black */
-  }
-  .hero.is-ready .hero-fade { opacity: 0; animation: none; }
-  @keyframes heroFadeSafety { to { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) { .hero-fade { transition: none; } }
-
   .hero::before {
     content: "";
     position: absolute;
@@ -263,16 +247,8 @@
   /* ---------- Carousel ---------- */
   .carousel-section {
     background: var(--dark);
-    /* generous dark gap between projects so no neighbour shows when one is snapped in view */
-    padding: clamp(48px, 9vh, 120px) 0;
+    padding: 0 0 clamp(20px, 3vh, 32px) 0;
   }
-
-  /* Gentle page snap: each project settles centred in the window.
-     The body is the scroll container on this page. Snap is switched on by a small
-     script only once you reach Forest Cathedral, so the hero and quote scroll freely. */
-  body.snap-on { scroll-snap-type: y mandatory; }
-  .quote { scroll-snap-align: start; }
-  .carousel-wrap { scroll-snap-align: center; }
 
   .carousel-wrap {
     width: 100%;
@@ -853,135 +829,6 @@
     text-align: center;
   }
 
-
-
-  /* Living Tree cover: pan down to show the ferns, lighter scrim so they stay visible */
-  .slide.cover-slide.lt-cover > img:not(.bg):not(.fg) { object-position: 50% 100%; }
-  .slide.cover-slide.lt-cover::after {
-    background: linear-gradient(to top, rgba(10,9,7,0.42) 0%, rgba(10,9,7,0.12) 30%, transparent 50%);
-  }
-
-
-
-  /* Living Tree cycle illustration: white page, drawing as large as the frame allows */
-  .slide.illustration-slide { background: #ffffff; }
-  .slide.illustration-slide img.fg { padding: clamp(8px, 1.6vh, 20px) clamp(12px, 2vw, 28px); }
-
-
-  /* Photo on the left, quote in a black panel on the right */
-  .slide.text-card.photo-quote {
-    padding: 0;
-    background: #000;
-    justify-content: flex-start;
-    align-items: stretch;
-  }
-  .slide.photo-quote .pq-photo-wrap {
-    position: relative;
-    flex: 0 0 auto;
-    height: 100%;
-    aspect-ratio: 3 / 4;
-  }
-  .slide.photo-quote .pq-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 55%;
-    display: block;
-  }
-  .slide.photo-quote .photo-credit {
-    position: absolute;
-    left: clamp(12px, 1.6vw, 20px);
-    bottom: clamp(10px, 1.6vh, 18px);
-    margin: 0;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: clamp(11px, 1vw, 13px);
-    letter-spacing: 0.02em;
-    color: var(--warm-white);
-    opacity: 0.8;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-    text-align: left;
-  }
-  .slide.photo-quote .pq-quote {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #000;
-    padding: clamp(24px, 6vw, 96px);
-  }
-  .slide.photo-quote .pq-quote > div { max-width: 32rem; }
-  @media (max-width: 560px) {
-    .slide.text-card.photo-quote { flex-direction: column; }
-    .slide.photo-quote .pq-photo-wrap { width: 100%; height: 58%; aspect-ratio: auto; }
-    .slide.photo-quote .pq-quote { padding: 20px 24px; }
-  }
-
-
-
-
-  /* Collective Daydreaming cover: keep the long hammock in view */
-  .slide.cover-slide.foi-daydreaming > img { object-position: 50% 86%; }
-
-  /* Big Pink Caterpillar cover: keep the pink tunnel in the band the frame shows */
-  .slide.cover-slide.foi-caterpillar > img { object-position: 50% 74%; }
-
-  /* The Water's Way cover on a wide screen: sit the picture low so the title lands on the grass, not on the pale fabric */
-  @media (min-width: 701px) {
-    .slide.cover-slide.foi-waters-way > img { object-position: 50% 100%; }
-  }
-
-  /* On a phone the picture is cropped to a narrow slice: slide it so the head and front of the tunnel are in view */
-  @media (max-width: 700px) {
-    .slide.cover-slide.foi-caterpillar > img { object-position: 0% 74%; }
-  }
-
-  /* Forest of Imagination cover: a busy drawing, so a stronger shade behind the words */
-  .slide.cover-slide.foi-cover > img { object-position: 50% 58%; }
-  .slide.cover-slide.foi-cover::after {
-    background: linear-gradient(to top, rgba(10,9,7,0.88) 0%, rgba(10,9,7,0.72) 30%, rgba(10,9,7,0.28) 58%, transparent 80%);
-  }
-  .slide.foi-cover .slide-text { text-shadow: 0 1px 14px rgba(0,0,0,0.6); }
-
-  /* Forest of Imagination frame: small line above the title on the first slide */
-  .slide-text .kicker {
-    display: block;
-    margin: 0 0 0.7em;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: clamp(13px, 1.3vw, 16px);
-    letter-spacing: 0.03em;
-    color: var(--warm-white);
-    opacity: 0.82;
-  }
-
-  /* Living Tree: caption on the film slide + attribution line on quote card */
-  .video-caption {
-    position: absolute;
-    left: clamp(20px, 4vw, 48px);
-    bottom: clamp(20px, 4vh, 40px);
-    z-index: 3;
-    margin: 0;
-    color: var(--warm-white);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: clamp(13px, 1.2vw, 15px);
-    letter-spacing: 0.02em;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-  }
-  .slide.text-card p.attrib {
-    margin-top: 1.4em;
-    font-size: clamp(13px, 1.5vw, 16px);
-    opacity: 0.72;
-  }
-  /* Forest Cathedral: the visitor line sits under the quote, lined up with its right edge */
-  #projects .slide.text-card p.attrib { text-align: right; margin-top: 0.7em; }
-  #projects .slide.text-card p.attrib.attrib-sm { font-size: clamp(11px, 1.15vw, 13px); }
-  @media (max-width: 560px) {
-    .video-caption { bottom: auto; top: 16px; left: 16px; right: 16px; }
-  }
-
   .slide.ig-slide {
     display: flex;
     flex-direction: column;
@@ -1136,7 +983,6 @@
     <video autoplay muted loop playsinline preload="auto">
       <source src="video/hero-forest-cathedral-loop.mp4" type="video/mp4">
     </video>
-    <div class="hero-fade" aria-hidden="true"></div>
 
     <h1 class="wordmark">Andrew Amondson</h1>
 
@@ -1184,10 +1030,7 @@
           </div>
 
           <div class="slide text-card">
-            <div>
-              <p>"Transcendent."</p>
-              <p class="attrib attrib-sm">&ndash; Messums Visitor</p>
-            </div>
+            <p>"Transcendent."</p>
           </div>
 
           <div class="slide">
@@ -1216,10 +1059,7 @@
           </div>
 
           <div class="slide text-card">
-            <div>
-              <p>"Extraordinarily Peaceful &amp; Introspective."</p>
-              <p class="attrib">&ndash; Messums Visitor</p>
-            </div>
+            <p>"Extraordinarily Peaceful &amp; Introspective."</p>
           </div>
 
           <div class="slide">
@@ -1238,10 +1078,7 @@
           </div>
 
           <div class="slide text-card">
-            <div>
-              <p>"If churches were like this, I would go more often."</p>
-              <p class="attrib">&ndash; Messums Visitor</p>
-            </div>
+            <p>"If churches were like this, I would go more often."</p>
           </div>
 
           <div class="slide">
@@ -1361,6 +1198,14 @@
           </div>
 
           <div class="slide">
+            <img class="bg" src="images/wondering-ways/wondering-ways-video-poster.jpg" alt="">
+            <video class="fg-video" playsinline preload="auto" poster="images/wondering-ways/wondering-ways-video-poster.jpg" data-continue-play="true">
+              <source src="video/wondering-ways.mp4" type="video/mp4">
+            </video>
+            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
+          </div>
+
+          <div class="slide">
             <img class="bg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="">
             <img class="fg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="Through the open doors of the Ballroom, tall dry grass fills the room beneath a chandelier">
           </div>
@@ -1405,14 +1250,6 @@
             <img class="fg" src="images/wondering-ways/09-sunlit-seed-heads.jpg" alt="Sunlit grass seed heads in the foreground, with chandeliers and windows beyond">
           </div>
 
-          <div class="slide">
-            <img class="bg" src="images/wondering-ways/wondering-ways-video-poster.jpg" alt="">
-            <video class="fg-video" playsinline preload="auto" poster="images/wondering-ways/wondering-ways-video-poster.jpg" data-continue-play="true">
-              <source src="video/wondering-ways.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
           <a class="slide ig-slide" href="https://www.instagram.com/p/CurzLC2IgGl/" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
@@ -1421,6 +1258,7 @@
             </svg>
             <span>for a behind-the-scenes look</span>
           </a>
+
 
         </div>
       </div>
@@ -1464,255 +1302,37 @@
             <img class="fg" src="images/milan/03-silver-eggs.jpg" alt="Three mirrored eggs in a woven nest in the foreground, with a second nest and an orange doorway beyond">
           </div>
 
+          <div class="slide">
+            <img class="bg" src="images/milan/09-eggs-from-above.jpg" alt="">
+            <img class="fg" src="images/milan/09-eggs-from-above.jpg" alt="Three mirrored eggs in a woven nest seen from above, reflecting the room and its visitors">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/milan/06-child-touching-eggs.jpg" alt="">
+            <img class="fg" src="images/milan/06-child-touching-eggs.jpg" alt="A child reaches into a large woven nest and rests his hands on mirrored eggs">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/milan/07-child-leaning-into-nest.jpg" alt="">
+            <img class="fg" src="images/milan/07-child-leaning-into-nest.jpg" alt="A child leans over the edge of the nest to look closely at the mirrored eggs">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/milan/08-two-children-at-nest.jpg" alt="">
+            <img class="fg" src="images/milan/08-two-children-at-nest.jpg" alt="Two children lean over the nest together, one reaching for a mirrored egg">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/milan/04-leaf-shadows.jpg" alt="">
+            <img class="fg" src="images/milan/04-leaf-shadows.jpg" alt="Shadows of leaves on a blue-green wall">
+          </div>
+
+          <div class="slide">
+            <img class="bg" src="images/milan/05-touching-the-eggs.jpg" alt="">
+            <img class="fg" src="images/milan/05-touching-the-eggs.jpg" alt="A man sits beside a large woven nest and rests his hands on two mirrored eggs, against a green wall with leaf shadows">
+          </div>
+
           <a class="slide ig-slide" href="https://www.instagram.com/p/DDHFdI6IuD2/" target="_blank" rel="noopener">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
-              <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
-              <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
-            </svg>
-            <span>watch preview</span>
-          </a>
-
-        </div>
-      </div>
-      <div class="carousel-dots"></div>
-    </div>
-  </section>
-
-  <!-- Living Tree gallery -->
-  <section class="carousel-section" id="living-tree">
-    <div class="carousel-wrap">
-      <div class="carousel-frame">
-        <div class="carousel-track">
-
-          <div class="slide cover-slide lt-cover">
-            <img src="images/living-tree/living-tree-hero.jpg" alt="The Living Tree at The Egg, Theatre Royal Bath: a tall tepee of bare poles ringed with ferns, with glowing green and blue orbs hanging in the dark space around it">
-            <div class="extra-scrim"></div>
-            <div class="slide-text">
-              <h2>The Living Tree</h2>
-              <p>2021–2026<br>Winner of the Inspire Future Generations Prize, 2022</p>
-              <div class="detail">
-                <p>The Living Tree Mirror Maze invited visitors and participants to walk through a geometric maze of mirrors into a living forest of sound, light and sensory experiences. The sound installation by musician Cosmo Sheldrake was composed using nine years of recorded amber-listed British birdsong, creating a beautiful and haunting soundscape for the Living Tree Forest. Designer Matthew Leece created a FUNgal network of connecting and communicating tubes to represent the concept of a mycelium network in the Egg Theatre café, inviting visitors into a deeper understanding of how the forest and humans are all connected, and to learn like a forest (Bateson 2023).</p>
-              </div>
-              <button class="read-more-btn" aria-expanded="false">read more</button>
-            </div>
-          </div>
-
-          <div class="slide text-card photo-quote">
-            <div class="pq-photo-wrap">
-              <img class="pq-photo" src="images/living-tree/living-tree-visitor-and-child.jpg" alt="A child and an adult crouching beside them, seen from behind, look toward the Living Tree: a tepee of bare poles in a dark hall, ringed with ferns, with pale spheres hanging around it and bright light behind.">
-              <p class="photo-credit">Photo: Charlotte Piddington</p>
-            </div>
-            <div class="pq-quote">
-              <div>
-                <p>"It's so interesting to think about how we used to frame forests as scary, dangerous places – and are now telling such a different story of care taking. I can't think of anything I've seen that expresses that better – or with more delight."</p>
-                <p class="attrib">Margaret Heffernan, author of <em>Embracing Uncertainty</em></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="slide cover-slide">
-            <img src="images/living-tree/living-tree-01-girls-look-up.jpg" alt="Two girls, seen from behind, look up into the Living Tree, a tepee of bare poles lit in deep blue, with bright light at the left.">
-            <div class="slide-text">
-              <h2>Living Tree Mirror Maze</h2>
-              <p>2022 Inspire Future Generations Prize</p>
-            </div>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="Close view of the Living Tree's bare poles in deep blue and violet light, with a few dry branches at the left.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-tepee-base.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-tepee-base.jpg" alt="The base of the Living Tree: bare poles rising from mounds of moss and ferns in low warm light.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-03-moss.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-03-moss.jpg" alt="Two girls crouch in the dark beside a patch of moss inside the Living Tree, lit in violet.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-06-light-above.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-06-light-above.jpg" alt="Looking straight up inside the Living Tree: a beam of light falls through a ring of bare poles.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="Two children stand among poles and moss inside the Living Tree, holding a softly glowing white sphere between them.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="Looking through the bare poles of the Living Tree at curtains of small warm lights hanging in the dark.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="An adult and a small child lean in to touch a mossy stump with a young fern growing from it, lit in a pool of light in the dark hall.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-07-doorway.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-07-doorway.jpg" alt="Two young children with small backpacks stand in a doorway framed by moss and ferns.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="">
-            <img class="fg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="Looking up through the poles of the Living Tree, with warm points of light glowing between them.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/living-tree/living-tree-film-poster.jpg" alt="">
-            <video class="fg-video" playsinline preload="auto" poster="images/living-tree/living-tree-film-poster.jpg" aria-label="Film of the Living Tree Forest Mirror Maze at The Egg, Bath">
-              <source src="video/living-tree-film.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
-        </div>
-      </div>
-      <div class="carousel-dots"></div>
-    </div>
-  </section>
-
-  <!-- Forest of Imagination gallery -->
-  <section class="carousel-section" id="forest-of-imagination">
-    <div class="carousel-wrap">
-      <div class="carousel-frame">
-        <div class="carousel-track">
-
-          <div class="slide cover-slide foi-hero">
-            <img src="images/forest-of-imagination/forest-of-imagination-hero.jpg" alt="A giant pale rabbit sits on a grassy hillside, seen through sheer blue fabric stretched across the foreground.">
-            <div class="extra-scrim"></div>
-            <div class="slide-text">
-              <h2>Forest of Imagination</h2>
-              <p>Selected installations and invitations, made as Lead Artist since 2021.</p>
-              <div class="detail">
-                <p>Forest of Imagination is an annual, free arts and architecture event in Bath. Each year it takes a familiar space in the city and reimagines it as a forest, to spark creativity and bring people closer to nature. It is run by House of Imagination with Grant Associates, Feilden Clegg Bradley Studios and Bath Spa University, together with Bath's creative, cultural and educational community.</p>
-                <p>Over the years it has taken over Queen Square, the spaces around Bath Abbey, the Assembly Rooms and the Holburne Museum and Gardens. Most recently it has taken root at Entry Hill, a forgotten green space the organisers hope will become a permanent Arts and Nature Park.</p>
-                <p>As Lead Artist since 2021, Andrew Amondson has made the installations and invitations that follow, inviting connection and wonder.</p>
-              </div>
-              <button class="read-more-btn" aria-expanded="false">read more</button>
-            </div>
-          </div>
-
-          <div class="slide cover-slide foi-waters-way">
-            <img src="images/forest-of-imagination/waters-way-00-blue-fabric.jpg" alt="Sheer pale blue fabric billows in the sunlight above a meadow, held up on canes, with dark trees and blue sky behind.">
-            <div class="extra-scrim"></div>
-            <div class="slide-text">
-              <h2>The Water's Way</h2>
-              <p>Entry Hill and the American Museum &amp; Gardens, Bath, 2026.</p>
-              <div class="detail">
-                <p>Hundreds of meters of shimmering blue and white fabric billow and lift on the wind, daylighting the ancient Lyn Brook buried beneath Entry Hill. In urban planning, daylighting is the practice of bringing rivers back to the surface of towns and cities, unburying them from the dark tunnels in which they have been confined, and letting the water meet the sun again. Here, the brook returns not in water but in light and air and moving translucent fabric: a river conjured from memory, flowing once more across the hillside.</p>
-                <p>The work invites soft fascination; attention held without effort, the kind that doesn't deplete but restores. Let your gaze follow the ribbon of fabric as it lifts and falls. Let it drift. The mind, given permission to wander, begins quietly to recover.</p>
-              </div>
-              <button class="read-more-btn" aria-expanded="false">read more</button>
-            </div>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/waters-way-04-clip-poster.jpg" alt="">
-            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/waters-way-04-clip-poster.jpg" aria-label="A ribbon of blue fabric lifting and falling in the wind over tall grass, with dark trees behind">
-              <source src="video/waters-way-2.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="A child runs through long grass beneath a billowing sheet of pale blue fabric held up on canes, the fabric stretching away across the meadow.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/waters-way-03-clip-poster.jpg" alt="">
-            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/waters-way-03-clip-poster.jpg" aria-label="Blue fabric rippling in the wind above a meadow, seen through a tree trunk and canes">
-              <source src="video/waters-way-1.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/waters-way-01-dusk.jpg" alt="A long sheer ribbon of fabric sweeps across the frame against a purple dusk sky, with dark trees behind it.">
-          </div>
-
-          <div class="slide cover-slide foi-caterpillar">
-            <img src="images/forest-of-imagination/big-pink-caterpillar-00-cover.jpg" alt="The long pink tunnel of The Big Pink Caterpillar curving away across a grassy slope under a big sky, with the dark willow head of the caterpillar curving up on the left.">
-            <div class="extra-scrim"></div>
-            <div class="slide-text">
-              <h2>The Big Pink Caterpillar</h2>
-              <p>Entry Hill, Bath, 2025.</p>
-              <div class="detail">
-                <p>The Big Pink Caterpillar is a 50-meter-long tunnel sculpture crafted from coppiced willow and repurposed pink ripstop fabric, crawling playfully up the green landscape toward the future site of the Butterfly House designed by Feilden Clegg Bradley Studios. This whimsical land art installation embodies the long-term vision for the Entry Hill site as a destination where art, nature, and transformation converge.</p>
-                <p>At its heart, The Big Pink Caterpillar is a color experiment that fundamentally shifts visitors’ perception of place. As people journey through the pink-tinted tunnel, their visual adaptation recalibrates. Upon emergence, the greens appear impossibly greener, the natural world more vivid and alive. This phenomenological shift demonstrates how our perception of nature is not fixed but malleable, shaped by experience, context, and wonder.</p>
-              </div>
-              <button class="read-more-btn" aria-expanded="false">read more</button>
-            </div>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="Children walk in a line beneath the long pink tunnel, their legs and feet visible under the fabric.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="A man in a green jacket and jeans stands in long grass with a checked scarf over his face, the pink tunnel behind him.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="Looking out through trees across a valley toward the houses and hills of Bath, with the pink caterpillar tunnel curving across a small meadow below.">
-          </div>
-
-          <div class="slide cover-slide foi-daydreaming">
-            <img src="images/forest-of-imagination/daydreaming-01-hammocks-cover.jpg" alt="Teal hammocks hung between the trunks of tall trees in a woodland grove.">
-            <div class="extra-scrim"></div>
-            <div class="slide-text">
-              <h2>Collective Daydreaming</h2>
-              <p>Entry Hill, Bath, 2026.</p>
-              <div class="detail">
-                <p>Twelve blue hammocks flow through a grove of trees on Entry Hill, connecting to the River of Dreams, the theme of Forest of Imagination in fall 2026. Collective Daydreaming asks visitors to do one thing: nothing. The hammocks cradle. Sound and light filter down through the leaves.</p>
-                <p>If something comes from the nothing, there are paper and markers to record it.</p>
-                <p>The work draws on Andrew Amondson's research into soft fascination, a key part of Attention Restoration Theory. Soft fascination holds our attention gently and lets the mind wander, restoring our depleted directed attention. Nature does this on its own. This drop-in intervention asks how we can design for it, and does something radical in return: it invites us to stop.</p>
-                <p>Like the other works in this frame, Collective Daydreaming is about creating the conditions for creative thinking, for the imagination to take root.</p>
-              </div>
-              <button class="read-more-btn" aria-expanded="false">read more</button>
-            </div>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/daydreaming-02b-hammock-and-dog.jpg" alt="A blue hammock hangs between trees in a grove, with a pale golden dog sitting on the path beside it.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-03-clip-poster.jpg" alt="">
-            <video class="fg-video" loop playsinline preload="auto" poster="images/forest-of-imagination/daydreaming-03-clip-poster.jpg" aria-label="A child sits in a teal hammock drawing on a clipboard, with more hammocks among the trees behind">
-              <source src="video/daydreaming.mp4" type="video/mp4">
-            </video>
-            <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-04-drawing.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/daydreaming-04-drawing.jpg" alt="A child lying back in a blue hammock holds up a clipboard with a blue crayon drawing of leaves against the trees.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-05-woman-in-hammock.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/daydreaming-05-woman-in-hammock.jpg" alt="An older woman in sunglasses lies in a blue and teal hammock slung between ivy-covered trees, with a meadow beyond.">
-          </div>
-
-          <div class="slide">
-            <img class="bg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="">
-            <img class="fg" src="images/forest-of-imagination/daydreaming-06-woman-with-drawing.jpg" alt="A woman in sunglasses holds up a clipboard with her crayon drawing of a person lying in a hammock among red tree trunks.">
-          </div>
-
-          <a class="slide ig-slide" href="https://www.instagram.com/p/Dd4ALrgMNYV/" target="_blank" rel="noopener">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
@@ -2056,68 +1676,6 @@
   </script>
 
   <script>
-/* Page snap starts at Forest Cathedral. Above it the page scrolls freely.
-   The quote is a snap point too, so scrolling up from the first project glides out to it,
-   and the snap switches itself off as soon as you are above Forest Cathedral. */
-(function () {
-  var body = document.body, proj = document.getElementById('projects');
-  if (!proj) return;
-  function update() {
-    var top = proj.getBoundingClientRect().top + body.scrollTop;
-    body.classList.toggle('snap-on', body.scrollTop >= top - 64);
-  }
-  body.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  update();
-})();
-</script>
-<script>
-/* Forest Cathedral quotes: the visitor line ends under the last letter of the quote,
-   not under the closing full stop and quotation mark. */
-(function () {
-  function align() {
-    document.querySelectorAll('#projects .slide.text-card').forEach(function (card) {
-      var q = card.querySelector('p:not(.attrib)'), a = card.querySelector('.attrib');
-      if (!q || !a) return;
-      var node = q.firstChild;
-      if (!node || node.nodeType !== 3) return;
-      var txt = node.nodeValue, m = txt.match(/[^\p{L}\p{N}]+$/u);
-      if (!m) { a.style.paddingRight = '0px'; return; }
-      var r = document.createRange();
-      r.setStart(node, txt.length - m[0].length);
-      r.setEnd(node, txt.length);
-      a.style.paddingRight = r.getBoundingClientRect().width + 'px';
-    });
-  }
-  window.addEventListener('load', align);
-  window.addEventListener('resize', align);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
-  align();
-})();
-</script>
-<script>
-/* Fade up from black once the hero video is really playing. */
-(function () {
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-  var v = hero.querySelector('video'), done = false, t0 = Date.now();
-  function reveal() { if (done) return; done = true; hero.classList.add('is-ready'); }
-  function soon() { setTimeout(reveal, Math.max(0, 400 - (Date.now() - t0))); }
-  if (!v || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) { reveal(); return; }
-  function onPlaying() {
-    if (v.currentTime > 0.05) { soon(); return; }
-    v.addEventListener('timeupdate', function tick() {
-      if (v.currentTime > 0.05) { v.removeEventListener('timeupdate', tick); soon(); }
-    });
-  }
-  v.addEventListener('playing', onPlaying, { once: true });
-  v.addEventListener('error', reveal);
-  var src = v.querySelector('source'); if (src) src.addEventListener('error', reveal);
-  if (!v.paused && v.readyState >= 3) onPlaying();
-  setTimeout(reveal, 6000); /* give up waiting after six seconds */
-})();
-</script>
-<script>
   (function () {
     var PEN = { teal: "#1F8F6D", cobalt: "#2A4FC4", coral: "#C1443B" };
 
