@@ -139,23 +139,29 @@
   }
 
   /* ---------- Mute button (appears while a video with sound is playing) ---------- */
-  .mute-btn {
+  /* Round sound button, bottom right: speaker with waves when sound is on, crossed out when it is off */
+  .sound-toggle {
     position: fixed;
-    right: clamp(16px, 3vw, 32px);
-    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(14px, 3vw, 28px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(14px, 3vw, 24px));
     z-index: 40;
-    background: rgba(20,18,14,0.82);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20,18,14,0.72);
     color: var(--warm-white);
-    border: 1px solid rgba(250,245,235,0.4);
-    border-radius: 999px;
-    padding: 9px 20px;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.02em;
+    border: 1px solid rgba(250,245,235,0.28);
+    border-radius: 50%;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
-  .mute-btn[hidden] { display: none; }
+  .sound-toggle[hidden] { display: none; }
+  .sound-toggle[data-state="on"] .ico-off,
+  .sound-toggle[data-state="off"] .ico-on { display: none; }
+  .sound-toggle:focus-visible { outline: 2px solid var(--warm-white); outline-offset: 3px; }
 
   nav a {
     color: rgba(250,245,235,0.82);
@@ -334,6 +340,16 @@
     font-size: 13px;
     letter-spacing: 0.02em;
     cursor: pointer;
+  }
+  /* Phones will not start sound by themselves, so the prompt sits in the middle of the picture */
+  .sound-btn {
+    top: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: 15px;
+    white-space: nowrap;
   }
 
   .sound-btn[hidden] { display: none; }
@@ -1010,6 +1026,33 @@
     color: rgba(250,245,235,0.82);
   }
 
+  /* A link placed on a spot in a photograph (position set as a share of the picture, see the script) */
+  .slide .photo-link {
+    position: absolute;
+    left: 47%;
+    top: 57%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    color: var(--warm-white);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(13px, 1.5vw, 16px);
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    white-space: nowrap;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+  }
+  .slide .photo-link svg { opacity: 0.95; filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.65)); }
+  .slide .photo-link:hover span,
+  .slide .photo-link:focus-visible span { text-decoration: underline; text-underline-offset: 4px; }
+  .slide .photo-link:focus-visible { outline: 2px solid var(--warm-white); outline-offset: 2px; border-radius: 6px; }
+
   .map-slide {
     position: relative;
     overflow: hidden;
@@ -1132,6 +1175,24 @@
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     pointer-events: none;
   }
+
+  /* Instagram icon at the end of the menu */
+  nav a.nav-ig { display: inline-flex; align-items: center; }
+  nav a.nav-ig svg { display: block; }
+
+  /* Small phones: tighter menu so the Instagram icon fits beside the name */
+  @media (max-width: 480px) {
+    .topbar { padding-left: 14px; padding-right: 14px; }
+    .topbar.scrolled { padding-left: 14px; padding-right: 14px; }
+    .topbar .bar-mark { font-size: 14px; letter-spacing: 0; }
+    nav { gap: 12px; }
+    nav a { font-size: 13px; letter-spacing: 0; }
+  }
+  @media (max-width: 340px) {
+    .topbar .bar-mark { font-size: 13px; }
+    nav { gap: 9px; }
+    nav a { font-size: 12.5px; }
+  }
 </style>
 </head>
 <body>
@@ -1143,10 +1204,14 @@
       <a href="cv.html">cv</a>
       <a href="about.html">about</a>
       <a href="about.html#contact">contact</a>
+      <a class="nav-ig" href="https://www.instagram.com/andrewamondson/" target="_blank" rel="noopener" aria-label="Andrew Amondson on Instagram (opens in a new tab)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.6"/><circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/></svg></a>
     </nav>
   </div>
 
-  <button class="mute-btn" id="muteBtn" type="button" aria-pressed="false" hidden>mute</button>
+  <button class="sound-toggle" id="soundToggle" type="button" data-state="off" aria-label="Turn sound on" hidden>
+    <svg class="ico-on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4H4z" fill="currentColor"/><path d="M15.6 9a4.2 4.2 0 0 1 0 6M18.3 6.4a8 8 0 0 1 0 11.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    <svg class="ico-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4H4z" fill="currentColor"/><path d="M15.8 9.6l4.6 4.8M20.4 9.6l-4.6 4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </button>
 
   <section class="hero">
     <video autoplay muted loop playsinline preload="auto">
@@ -1180,7 +1245,8 @@
               <p>A forest of mirrored mobiles inside a 13th-century tithe barn — Messums West, Wiltshire.</p>
               <div class="detail">
                 <p>Forest Cathedral is a space for understanding as well as experience. Forest Cathedral transforms the tithe barn at Messums West, with its tree-like beams, into a living forest of light and sound. A kinetic sculpture of branching limbs and mirrored leaves gently moves with air currents created by visitors, filtering light through this forest canopy. Layered shadows animate the floor below while reflected light illuminates the ancient timbers above.</p>
-                <p>A dimensional soundscape rises from grounding tones of the forest floor and root systems through rustling mid-range frequencies to the bright presence of canopy birdsong. Forest Cathedral unites light and sound as wavelengths that move throughout the space. The Forest Cathedral installation is designed to tour England's most significant Gothic cathedrals; the start of this journey will be at Winchester Cathedral in February 2027.</p>
+                <p>A dimensional soundscape rises from grounding tones of the forest floor and root systems through rustling mid-range frequencies to the bright presence of canopy birdsong. Forest Cathedral unites light and sound as wavelengths that move throughout the space.</p>
+                <p>The Forest Cathedral installation is designed to tour England's most significant Gothic cathedrals; the start of this journey will be at Winchester Cathedral in February 2027.</p>
               </div>
               <button class="read-more-btn" aria-expanded="false">read more</button>
             </div>
@@ -1508,7 +1574,7 @@
               <h2>The Living Tree</h2>
               <p>2021–2026<br>Winner of the Inspire Future Generations Prize, 2022</p>
               <div class="detail">
-                <p>The Living Tree Mirror Maze invited visitors and participants to walk through a geometric maze of mirrors into a living forest of sound, light and sensory experiences. The sound installation by musician Cosmo Sheldrake was composed using nine years of recorded amber-listed British birdsong, creating a beautiful and haunting soundscape for the Living Tree Forest. Designer Matthew Leece created a FUNgal network of connecting and communicating tubes to represent the concept of a mycelium network in the Egg Theatre café, inviting visitors into a deeper understanding of how the forest and humans are all connected, and to learn like a forest (Bateson 2023).</p>
+                <p>The Living Tree Mirror Maze invited visitors and participants to walk through a geometric maze of mirrors into a living forest of sound, light and sensory experiences. The sound installation by musician Cosmo Sheldrake was composed using nine years of recorded amber-listed British birdsong, creating a beautiful and haunting soundscape for the Living Tree Forest. Designer Matthew Leece created a FUNgal network of connecting and communicating tubes to represent the concept of a mycelium network in the Egg Theatre café below the forest floor, inviting visitors into a deeper understanding of how the forest and humans are all connected, and to learn like a forest (Bateson 2023).</p>
               </div>
               <button class="read-more-btn" aria-expanded="false">read more</button>
             </div>
@@ -1682,6 +1748,14 @@
           <div class="slide">
             <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-05-valley-view.jpg" alt="Looking out through trees across a valley toward the houses and hills of Bath, with the pink caterpillar tunnel curving across a small meadow below.">
+            <a class="photo-link" href="https://www.instagram.com/p/DPW1YJDjCSq/" target="_blank" rel="noopener" data-x="0.47" data-y="0.57" aria-label="Watch the film on Instagram (opens in a new tab)">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.4"/>
+                <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.4"/>
+                <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/>
+              </svg>
+              <span>watch the film</span>
+            </a>
           </div>
 
           <div class="slide cover-slide foi-daydreaming">
@@ -1885,28 +1959,25 @@
       function activateVideoIn(slide) {
         var video = slide.querySelector('video.fg-video');
         if (!video) return;
-        var soundBtn = slide.querySelector('.sound-btn');
+        // A visitor who paused it themselves keeps it paused.
+        if (video._userPaused) return;
         var cta = slide.querySelector('.post-video-cta');
 
         if (video.paused || video.ended) {
           video.currentTime = 0;
-          video.muted = false;
-          if (soundBtn) soundBtn.hidden = true;
+          video.muted = !!video._userMuted;
           if (cta) { cta.classList.remove('visible'); cta.hidden = true; }
 
           var playPromise = video.play();
           if (playPromise && playPromise.catch) {
             playPromise.catch(function () {
+              // The browser wants a tap first: try silently, and the
+              // "tap for sound" prompt and sound bar take it from there.
               video.muted = true;
-              video.play().catch(function () {});
-              if (soundBtn) soundBtn.hidden = false;
+              var again = video.play();
+              if (again && again.catch) again.catch(function () {});
             });
           }
-          // Some mobile browsers silently force-mute programmatic playback
-          // instead of rejecting play() above — catch that case too.
-          setTimeout(function () {
-            if ((video.muted || video.paused) && soundBtn) soundBtn.hidden = false;
-          }, 600);
         }
       }
 
@@ -1915,6 +1986,7 @@
           if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
             var idx = slides.indexOf(entry.target);
             dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+            wrap._active = entry.target;
             activateVideoIn(entry.target);
           } else {
             // Leaving this slide — stop its video's sound, unless this
@@ -1931,6 +2003,18 @@
       }, { root: track, threshold: [0.6] });
 
       slides.forEach(function (s) { observer.observe(s); });
+
+      // Leaving the project (scrolling it out of view) stops its sound.
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.intersectionRatio < 0.12) {
+            slides.forEach(function (sl) {
+              var v = sl.querySelector('video.fg-video');
+              if (v && !v.paused) v.pause();
+            });
+          }
+        });
+      }, { threshold: [0, 0.12, 0.5] }).observe(wrap);
 
       // Reveal each video's post-video CTA (if it has one) once it finishes.
       slides.forEach(function (slide) {
@@ -1960,53 +2044,99 @@
       updateBar();
     })();
 
-    // Mute button: visible whenever a video with sound is playing, wherever
-    // the visitor is on the page (Forest Cathedral keeps playing as they swipe on).
+    // Sound controls. While the visitor is in a project that has a sound video, a
+    // small bar offers play/pause and mute. Phones will not start sound on their
+    // own, so a tap on play (or on the prompt in the picture) starts it with sound.
     (function () {
-      var btn = document.getElementById('muteBtn');
+      var toggle = document.getElementById('soundToggle');
       var vids = Array.prototype.slice.call(document.querySelectorAll('video.fg-video'));
-      function playing() {
-        return vids.filter(function (v) { return !v.paused && !v.ended; });
+
+      function wrapOf(v) { return v.closest('.carousel-wrap'); }
+      function inView(w) {
+        var r = w.getBoundingClientRect();
+        return r.top < window.innerHeight / 2 && r.bottom > window.innerHeight / 2;
+      }
+      function target() {
+        var w = wraps.filter(inView)[0];
+        if (!w) return null;
+        var list = Array.prototype.slice.call(w.querySelectorAll('video.fg-video'));
+        if (!list.length) return null;
+        var playing = list.filter(function (v) { return !v.paused && !v.ended; })[0];
+        if (playing) return playing;
+        var onSlide = list.filter(function (v) { return w._active && w._active.contains(v); })[0];
+        if (onSlide) return onSlide;
+        return list.filter(function (v) { return v._started; })[0] || null;
       }
       function update() {
-        var p = playing();
-        var promptShowing = document.querySelector('.sound-btn:not([hidden])');
-        if (!p.length || promptShowing) { btn.hidden = true; return; }
-        var anyLoud = p.some(function (v) { return !v.muted; });
-        btn.hidden = false;
-        btn.textContent = anyLoud ? 'mute' : 'unmute';
-        btn.setAttribute('aria-pressed', anyLoud ? 'false' : 'true');
+        vids.forEach(function (v) {
+          var slide = v.closest('.slide');
+          var w = wrapOf(v);
+          // As soon as the visitor has moved on to another project, its sound stops.
+          if (!v.paused && !v.ended && !inView(w)) v.pause();
+          var b = slide.querySelector('.sound-btn');
+          if (!b) return;
+          var here = w._active === slide && inView(w);
+          var needsPlay = v.paused && !v.ended && !v._userPaused;
+          var needsSound = !v.paused && v.muted && !v._userMuted;
+          b.hidden = !(here && (needsPlay || needsSound));
+          if (!b.hidden) b.textContent = needsPlay ? 'tap to play with sound' : 'tap for sound';
+        });
+        var t = target();
+        if (!t) { toggle.hidden = true; return; }
+        toggle.hidden = false;
+        var on = !t.paused && !t.ended && !t.muted;
+        toggle.setAttribute('data-state', on ? 'on' : 'off');
+        toggle.setAttribute('aria-label', (t.paused || t.ended) ? 'Play with sound' : (t.muted ? 'Turn sound on' : 'Turn sound off'));
+        toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
       }
-      btn.addEventListener('click', function () {
-        var p = playing();
-        var anyLoud = p.some(function (v) { return !v.muted; });
-        vids.forEach(function (v) { v.muted = anyLoud; });
+      function start(v) {
+        v._userPaused = false;
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+
+      toggle.addEventListener('click', function () {
+        var v = target(); if (!v) return;
+        if (v.paused || v.ended) {
+          // Not playing yet (a phone is waiting for a tap): start, with sound.
+          if (v.ended) v.currentTime = 0;
+          v._userMuted = false;
+          v.muted = false;
+          start(v);
+        } else {
+          v.muted = !v.muted;
+          v._userMuted = v.muted;
+        }
         update();
       });
-      vids.forEach(function (v) {
-        ['play', 'pause', 'ended', 'volumechange'].forEach(function (ev) {
-          v.addEventListener(ev, update);
+      // Tap-for-sound prompt inside the picture
+      document.querySelectorAll('.sound-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var v = btn.closest('.slide').querySelector('video.fg-video');
+          if (!v) return;
+          v._userMuted = false;
+          v.muted = false;
+          start(v);
+          btn.hidden = true;
+          update();
         });
       });
       vids.forEach(function (v) {
+        ['play', 'pause', 'ended', 'volumechange', 'playing'].forEach(function (ev) { v.addEventListener(ev, update); });
         v.addEventListener('play', function () {
+          v._started = true;
           vids.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
         });
+      });
+      window.addEventListener('scroll', update, { passive: true });
+      document.body.addEventListener('scroll', update, { passive: true });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) vids.forEach(function (v) { if (!v.paused) v.pause(); });
+        update();
       });
       setInterval(update, 500);
       update();
     })();
-
-    // Tap-for-sound buttons (scoped to whichever slide they're in)
-    document.querySelectorAll('.sound-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var video = btn.closest('.slide').querySelector('video.fg-video');
-        if (!video) return;
-        video.muted = false;
-        video.play();
-        btn.hidden = true;
-      });
-    });
 
     // Read-more toggles (scoped to whichever cover-slide they're in)
     document.querySelectorAll('.read-more-btn').forEach(function (btn) {
@@ -2017,6 +2147,24 @@
         btn.textContent = expanded ? 'read less' : 'read more';
         btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
       });
+    });
+
+    // Photo links: keep each one on its chosen spot of the picture (data-x, data-y are
+    // shares of the picture's width and height), however the slide is shaped.
+    document.querySelectorAll('.photo-link').forEach(function (link) {
+      var slide = link.closest('.slide');
+      var img = slide.querySelector('img.fg');
+      if (!img) return;
+      function place() {
+        var nw = img.naturalWidth, nh = img.naturalHeight;
+        if (!nw || !nh) return;
+        var sw = slide.clientWidth, sh = slide.clientHeight;
+        var k = Math.min(sw / nw, sh / nh), w = nw * k, h = nh * k;
+        link.style.left = ((sw - w) / 2 + w * parseFloat(link.dataset.x)) + 'px';
+        link.style.top = ((sh - h) / 2 + h * parseFloat(link.dataset.y)) + 'px';
+      }
+      if (img.complete) place(); else img.addEventListener('load', place);
+      window.addEventListener('resize', place);
     });
 
     // Instagram / external-link slides: stop any playing site video so its
