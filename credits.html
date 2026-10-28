@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Amondson — Credits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --ink: #1c1914;
+    --ink-soft: rgba(28,25,20,0.62);
+    --ink-faint: rgba(28,25,20,0.4);
+    --line: rgba(28,25,20,0.14);
+    --warm-white: rgba(250, 245, 235, 0.96);
+    --dark: #14120e;
+    --vh: 1vh;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  }
+
+  /* ---------- Top nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(18px, 3vw, 32px) clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wordmark-link {
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px);
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(16px, 2.2vw, 32px);
+  }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--ink);
+  }
+
+  nav a.current {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Content ---------- */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(48px, 8vh, 96px) clamp(20px, 5vw, 40px) clamp(80px, 12vh, 140px);
+  }
+
+  .bio h1 {
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    font-size: clamp(30px, 4.4vw, 44px);
+    letter-spacing: 0.005em;
+  }
+
+  .bio p {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 640px;
+  }
+
+  section.cv-section {
+    margin-top: clamp(48px, 7vh, 76px);
+  }
+
+  .section-label {
+    display: block;
+    font-weight: 400;
+    font-size: clamp(12px, 0.95vw, 14px);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .entry-main {
+    flex: 1;
+    font-weight: 400;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.5;
+  }
+
+  .entry-main a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .entry-main a:hover {
+    text-decoration-color: var(--ink);
+  }
+
+  .entry-meta {
+    flex-shrink: 0;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    color: var(--ink-soft);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .entry-note {
+    display: block;
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 14.5px);
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 560px) {
+    .entry {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .entry-meta {
+      text-align: left;
+    }
+    nav { gap: 14px; }
+  }
+  html { scroll-padding-top: 80px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a class="wordmark-link" href="index.html">Andrew Amondson</a>
+    <nav>
+      <a href="index.html#projects">projects</a>
+      <a href="cv.html">cv</a>
+      <a href="about.html">about</a>
+      <a href="about.html#contact">contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="bio">
+      <h1>Credits</h1>
+      <p>The work is made with many people. Here are the collaborators and partners behind each project, and the photographers whose pictures appear on this site.</p>
+    </div>
+
+    <section class="cv-section">
+      <span class="section-label">forest cathedral</span>
+      <div class="entry"><div class="entry-main"><a href="https://www.messums.org/" target="_blank" rel="noopener">Messums West</a> — venue and collaborator, with Johnny Messum</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.messums.org/" target="_blank" rel="noopener">Hannah Davies</a> — Director of Operations, Messums West</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://soundcloud.com/ananda_costa" target="_blank" rel="noopener">Ananda Costa</a> — sound design and score</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://de.linkedin.com/in/olga-kalina-a8ba714b" target="_blank" rel="noopener">Olga Kalina</a> — project manager</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://de.linkedin.com/in/shadymahers" target="_blank" rel="noopener">Shady Maher</a> — design development</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Magdalena Narkiewicz — concept art and renderings</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Matthias Gerber — design development and fabrication consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Andrew Amondson, Johnny Messum</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">walking with</span>
+      <div class="entry"><div class="entry-main"><a href="https://www.eer.info/" target="_blank" rel="noopener">Studio Olafur Eliasson</a> — Walking With and EER</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://interactingminds.au.dk/" target="_blank" rel="noopener">Interacting Minds Centre, Aarhus University</a> — EER research partner</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Film: Yanina Isla</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Ágoston Horonyi, Andrew Amondson</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">wondering ways</span>
+      <div class="entry"><div class="entry-main"><a href="https://fcbstudios.com/" target="_blank" rel="noopener">Feilden Clegg Bradley Studios</a> — co-creators of Wondering Ways (2023); lead designers Michael Lewis and Luke Macnab</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.cosmosheldrake.com/" target="_blank" rel="noopener">Cosmo Sheldrake</a> — music</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.amondson.com/" target="_blank" rel="noopener">Nathan Amondson</a> — design consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://ticket-b.de/en/about-us/cyril-kriwan/" target="_blank" rel="noopener">Cyril Kriwan</a> — design consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.shedworks.studio/" target="_blank" rel="noopener">Mark Carey, Shedworks</a> — project management</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Andrew Amondson, @wanderlut_on_wheelz, Shanti Faiia, National Trust Images / Barry Batchelor, Nicola Turner</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">where we find ourselves</span>
+      <div class="entry"><div class="entry-main"><a href="https://it.linkedin.com/in/ales-bonaccorsi-31a1395" target="_blank" rel="noopener">Ales Bonaccorsi</a> — creative director</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://soundcloud.com/ananda_costa" target="_blank" rel="noopener">Ananda Costa</a> — score</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Andrea Salvetti — nests and eggs</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.amondson.com/" target="_blank" rel="noopener">Nathan Amondson</a> — design consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://ticket-b.de/en/about-us/cyril-kriwan/" target="_blank" rel="noopener">Cyril Kriwan</a> — design consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Magdalena Narkiewicz — concept art and renderings</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://studiobarthelmes.de" target="_blank" rel="noopener">Studio Barthelmes</a> — lighting consultant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Ales Bonaccorsi</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">living tree</span>
+      <div class="entry"><div class="entry-main"><a href="https://www.cosmosheldrake.com/" target="_blank" rel="noopener">Cosmo Sheldrake</a> — music for the Living Tree Mirror Maze</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.matthewleece.co.uk/" target="_blank" rel="noopener">Matthew Leece</a> — designer of the FUNgal mycelium network of tubes</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.ribaj.com/culture/obituary-charley-brentnall-1952-2024-timber-architecture-heritage-sustainability" target="_blank" rel="noopener">Charley Brentnall (1952–2024)</a> — design mentor and advanced timber geometry</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.shedworks.studio/" target="_blank" rel="noopener">Mark Carey, Shedworks</a> — project management</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Lloyd Evans, Charlotte Piddington, Abigail Tinnion</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">forest of imagination</span>
+      <div class="entry"><div class="entry-main"><a href="https://www.forestofimagination.org.uk/" target="_blank" rel="noopener">House of Imagination</a> — the charity behind Forest of Imagination</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://grant-associates.uk.com/" target="_blank" rel="noopener">Grant Associates</a> — founding partner, with Andrew Grant</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.bathspa.ac.uk/" target="_blank" rel="noopener">Bath Spa University</a> — funding partner</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://fcbstudios.com/" target="_blank" rel="noopener">Feilden Clegg Bradley Studios</a> — collaborators on installations including The Big Pink Caterpillar</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main"><a href="https://www.matthewleece.co.uk/" target="_blank" rel="noopener">Matthew Leece</a> — project management, The Big Pink Caterpillar and The Water's Way</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Dr Penny Hay — co-author of the Forest of Imagination chapter; Learning Like a Forest workshop</div><div class="entry-meta"></div></div>
+      <div class="entry"><div class="entry-main">Photography: Andrew Amondson, Emma Seal, Penny Hay</div><div class="entry-meta"></div></div>
+    </section>
+
+    <section class="cv-section">
+      <span class="section-label">portrait</span>
+      <div class="entry"><div class="entry-main">Portrait on the About page: Juliane Eirich</div><div class="entry-meta"></div></div>
+    </section>
+
+  </main>
+
+</body>
+</html>

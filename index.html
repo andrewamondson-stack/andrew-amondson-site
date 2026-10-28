@@ -1116,6 +1116,22 @@
       height: calc(var(--vh) * 78);
     }
   }
+
+  /* Photo and film credits: a small line in the bottom corner of the slide */
+  .slide .credit-tag {
+    position: absolute;
+    right: clamp(10px, 1.6vw, 20px);
+    bottom: clamp(8px, 1.4vh, 16px);
+    z-index: 4;
+    max-width: 55%;
+    text-align: right;
+    font-size: 10.5px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -1178,7 +1194,7 @@
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Johnny Messum</span>
             <img class="bg" src="images/forest-cathedral-barn-roof.jpg" alt="">
             <img class="fg" src="images/forest-cathedral-barn-roof.jpg" alt="Wide view of the barn's timber roof canopy hung with mirrored mobiles">
           </div>
@@ -1270,7 +1286,7 @@
       <div class="carousel-frame">
         <div class="carousel-track">
 
-          <div class="slide cover-slide">
+          <div class="slide cover-slide"><span class="credit-tag">Photo: Ágoston Horonyi</span>
             <img src="images/eer-neue-nationalgalerie-hero.jpg" alt="Visitors walking together past the black steel pavilion of the Neue Nationalgalerie, Berlin">
             <div class="extra-scrim"></div>
             <div class="slide-text">
@@ -1285,7 +1301,7 @@
             </div>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Film: Yanina Isla</span>
             <img class="bg" src="images/eer-walking-with-video-poster.jpg" alt="">
             <video class="fg-video" playsinline preload="auto" poster="images/eer-walking-with-video-poster.jpg">
               <source src="video/walking-with-our-future-ideas-30s.mp4" type="video/mp4">
@@ -1306,7 +1322,7 @@
             </div>
           </button>
 
-          <div class="slide cover-slide">
+          <div class="slide cover-slide"><span class="credit-tag">Photo: Ágoston Horonyi</span>
             <img src="images/eer-studio-olafur-eliasson-walk.jpg" alt="Two people walking together in conversation on a Berlin street">
             <div class="extra-scrim"></div>
             <div class="slide-text">
@@ -1360,7 +1376,7 @@
             </div>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: @wanderlut_on_wheelz</span>
             <img class="bg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="">
             <img class="fg" src="images/wondering-ways/01-ballroom-doorway.jpg" alt="Through the open doors of the Ballroom, tall dry grass fills the room beneath a chandelier">
           </div>
@@ -1380,22 +1396,22 @@
             <img class="fg" src="images/wondering-ways/04-children-entering-den.jpg" alt="School children crouch to enter a low timber-framed den among the grasses">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Shanti Faiia</span>
             <img class="bg" src="images/wondering-ways/05-roots-oval-mirror.jpg" alt="">
             <img class="fg" src="images/wondering-ways/05-roots-oval-mirror.jpg" alt="Tree roots seen from below through an oval opening, with the ballroom columns beyond">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: National Trust Images / Barry Batchelor</span>
             <img class="bg" src="images/wondering-ways/06-child-touching-grass.jpg" alt="">
             <img class="fg" src="images/wondering-ways/06-child-touching-grass.jpg" alt="A child reaches up to touch a grass seed head, standing in a ring of soil">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: National Trust Images / Barry Batchelor</span>
             <img class="bg" src="images/wondering-ways/07-conversation-in-grass.jpg" alt="">
             <img class="fg" src="images/wondering-ways/07-conversation-in-grass.jpg" alt="Four young people talk in a circle among tall grasses">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Nicola Turner</span>
             <img class="bg" src="images/wondering-ways/08-visitors-in-tall-grass.jpg" alt="">
             <img class="fg" src="images/wondering-ways/08-visitors-in-tall-grass.jpg" alt="Two visitors stand in tall grass beneath chandeliers, a young tree behind them">
           </div>
@@ -1434,7 +1450,7 @@
       <div class="carousel-frame">
         <div class="carousel-track">
 
-          <div class="slide cover-slide">
+          <div class="slide cover-slide"><span class="credit-tag">Photo: Ales Bonaccorsi</span>
             <img src="images/milan/milan-hero.jpg" alt="A corridor of tree-shaped wooden arches hung with mirrored leaf mobiles, woven nests on a green carpet and a yellow doorway">
             <div class="extra-scrim"></div>
             <div class="slide-text">
@@ -1449,17 +1465,17 @@
             </div>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Ales Bonaccorsi</span>
             <img class="bg" src="images/milan/01-trees-and-nests.jpg" alt="">
             <img class="fg" src="images/milan/01-trees-and-nests.jpg" alt="Mirrored leaf mobiles hang over tree-shaped arches and a woven nest in a green room">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Ales Bonaccorsi</span>
             <img class="bg" src="images/milan/02-large-nest.jpg" alt="">
             <img class="fg" src="images/milan/02-large-nest.jpg" alt="A large woven nest holding soft stones in the foreground, with tree-shaped arches and a smaller nest of mirrored eggs beyond">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Ales Bonaccorsi</span>
             <img class="bg" src="images/milan/03-silver-eggs.jpg" alt="">
             <img class="fg" src="images/milan/03-silver-eggs.jpg" alt="Three mirrored eggs in a woven nest in the foreground, with a second nest and an orange doorway beyond">
           </div>
@@ -1485,7 +1501,7 @@
       <div class="carousel-frame">
         <div class="carousel-track">
 
-          <div class="slide cover-slide lt-cover">
+          <div class="slide cover-slide lt-cover"><span class="credit-tag">Photo: Lloyd Evans</span>
             <img src="images/living-tree/living-tree-hero.jpg" alt="The Living Tree at The Egg, Theatre Royal Bath: a tall tepee of bare poles ringed with ferns, with glowing green and blue orbs hanging in the dark space around it">
             <div class="extra-scrim"></div>
             <div class="slide-text">
@@ -1511,7 +1527,7 @@
             </div>
           </div>
 
-          <div class="slide cover-slide">
+          <div class="slide cover-slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img src="images/living-tree/living-tree-01-girls-look-up.jpg" alt="Two girls, seen from behind, look up into the Living Tree, a tepee of bare poles lit in deep blue, with bright light at the left.">
             <div class="slide-text">
               <h2>Living Tree Mirror Maze</h2>
@@ -1519,47 +1535,47 @@
             </div>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-05-poles-blue.jpg" alt="Close view of the Living Tree's bare poles in deep blue and violet light, with a few dry branches at the left.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-tepee-base.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-tepee-base.jpg" alt="The base of the Living Tree: bare poles rising from mounds of moss and ferns in low warm light.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-03-moss.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-03-moss.jpg" alt="Two girls crouch in the dark beside a patch of moss inside the Living Tree, lit in violet.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-06-light-above.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-06-light-above.jpg" alt="Looking straight up inside the Living Tree: a beam of light falls through a ring of bare poles.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-04-glowing-sphere.jpg" alt="Two children stand among poles and moss inside the Living Tree, holding a softly glowing white sphere between them.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-fairy-lights.jpg" alt="Looking through the bare poles of the Living Tree at curtains of small warm lights hanging in the dark.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-adult-child-moss.jpg" alt="An adult and a small child lean in to touch a mossy stump with a young fern growing from it, lit in a pool of light in the dark hall.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-07-doorway.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-07-doorway.jpg" alt="Two young children with small backpacks stand in a doorway framed by moss and ferns.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Abigail Tinnion</span>
             <img class="bg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="">
             <img class="fg" src="images/living-tree/living-tree-02-light-between-poles.jpg" alt="Looking up through the poles of the Living Tree, with warm points of light glowing between them.">
           </div>
@@ -1621,7 +1637,7 @@
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Emma Seal</span>
             <img class="bg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/waters-way-02-boy-running.jpg" alt="A child runs through long grass beneath a billowing sheet of pale blue fabric held up on canes, the fabric stretching away across the meadow.">
           </div>
@@ -1653,12 +1669,12 @@
             </div>
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Penny Hay</span>
             <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-03-children-feet.jpg" alt="Children walk in a line beneath the long pink tunnel, their legs and feet visible under the fabric.">
           </div>
 
-          <div class="slide">
+          <div class="slide"><span class="credit-tag">Photo: Emma Seal</span>
             <img class="bg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="">
             <img class="fg" src="images/forest-of-imagination/big-pink-caterpillar-04-andrew.jpg" alt="A man in a green jacket and jeans stands in long grass with a checked scarf over his face, the pink tunnel behind him.">
           </div>
