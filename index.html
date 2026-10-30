@@ -12,7 +12,7 @@
 <meta property="og:title" content="Andrew Amondson — artist, large-scale living installations">
 <meta property="og:description" content="The work of artist Andrew Amondson: large-scale kinetic and living installations reflecting on our connections to nature and one another.">
 <meta property="og:url" content="https://andrewamondson.com/">
-<meta property="og:image" content="https://andrewamondson.com/images/hero-poster.jpg">
+<meta property="og:image" content="https://andrewamondson.com/images/og-image.jpg">
 <meta property="og:image:alt" content="Forest Cathedral, a kinetic installation of mirrored leaves inside a medieval tithe barn">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Andrew Amondson", "url": "https://andrewamondson.com/"}</script>
@@ -204,6 +204,15 @@
     letter-spacing: 0.01em;
     text-align: center;
     white-space: nowrap;
+  }
+
+  /* The name sits in the middle distance of the opening video: it stays hidden until the video is
+     playing, and the script tucks it behind each beam as it passes. If anything fails, it still shows. */
+  .hero .wordmark { opacity: 0; animation: nameFallback 0.6s ease 6s forwards; }
+  .hero.name-live .wordmark { opacity: 1; animation: none; }
+  @keyframes nameFallback { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero .wordmark { opacity: 1; animation: none; clip-path: none !important; }
   }
 
   .scroll-cue {
@@ -1217,7 +1226,6 @@
     <a class="bar-mark" href="index.html">Andrew Amondson</a>
     <nav>
       <a href="#projects">projects</a>
-      <a href="cv.html">cv</a>
       <a href="about.html">about</a>
       <a href="about.html#contact">contact</a>
       <a class="nav-ig" href="https://www.instagram.com/andrewamondson/" target="_blank" rel="noopener" aria-label="Andrew Amondson on Instagram (opens in a new tab)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.6"/><circle cx="17.35" cy="6.65" r="1.15" fill="currentColor"/></svg></a>
@@ -1238,13 +1246,6 @@
     <h1 class="wordmark">Andrew Amondson</h1>
 
     <div class="scroll-cue" aria-hidden="true"></div>
-  </section>
-
-  <!-- Quote -->
-  <section class="quote">
-    <blockquote>
-      "I'm interested in creating the conditions that help us connect to nature and one another."
-    </blockquote>
   </section>
 
   <!-- Forest Cathedral gallery -->
@@ -2289,6 +2290,68 @@
   var src = v.querySelector('source'); if (src) src.addEventListener('error', reveal);
   if (!v.paused && v.readyState >= 3) onPlaying();
   setTimeout(reveal, 6000); /* give up waiting after six seconds */
+})();
+</script>
+<script>
+/* The name in the middle distance: a small data file records where each big beam's top and bottom
+   edge is in every moment of the opening video. Frame by frame, the part of the name that lies
+   "behind" a beam is clipped away. */
+(function () {
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+  var v = hero.querySelector('video'), name = hero.querySelector('.wordmark');
+  if (!v || !name) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { hero.classList.add('name-live'); return; }
+
+  var data = null, settled = false, m = null, last = '';
+  function live() { hero.classList.add('name-live'); }
+  function measure() {
+    var h = hero.getBoundingClientRect(), n = name.getBoundingClientRect();
+    var s = Math.max(h.width / 1280, h.height / 720);
+    m = { nw: n.width, nh: n.height, s: s, ox: (h.width - 1280 * s) / 2 - (n.left - h.left), oy: (h.height - 720 * s) / 2 - (n.top - h.top) };
+  }
+  function edgesAt(t) {
+    for (var i = 0; i < data.windows.length; i++) {
+      var w = data.windows[i], n = w.up.length;
+      if (t >= w.t && t <= w.t + (n - 1) * w.dt) {
+        var f = (t - w.t) / w.dt, k = Math.floor(f), k2 = Math.min(k + 1, n - 1), a = f - k, up = [], lo = [];
+        for (var j = 0; j < w.up[k].length; j++) { up.push(w.up[k][j] * (1 - a) + w.up[k2][j] * a); lo.push(w.lo[k][j] * (1 - a) + w.lo[k2][j] * a); }
+        return { up: up, lo: lo };
+      }
+    }
+    return null;
+  }
+  function clipFor(t) {
+    var e = data && edgesAt(t);
+    if (!e) return 'none';
+    var xs = data.xs, up = e.up, lo = e.lo, top = [], bot = [], minU = 1e9, maxL = -1e9, X, i;
+    for (i = 0; i < xs.length; i++) {
+      X = xs[i] * m.s + m.ox;
+      var yu = up[i] * m.s + m.oy, yl = lo[i] * m.s + m.oy;
+      top.push([X, yu]); bot.push([X, yl]);
+      if (X > -150 && X < m.nw + 150) { if (yu < minU) minU = yu; if (yl > maxL) maxL = yl; }
+    }
+    if (minU >= m.nh + 8 || maxL <= -8) return 'none';          // no beam is crossing the name right now
+    var pts = [[-300, top[0][1]]].concat(top, [[m.nw + 300, top[top.length - 1][1]], [m.nw + 300, bot[bot.length - 1][1]]], bot.slice().reverse(), [[-300, bot[0][1]]]);
+    var d = 'M-300 -300H' + (m.nw + 300) + 'V' + (m.nh + 300) + 'H-300Z M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + 'Z';
+    return 'path(evenodd,"' + d + '")';
+  }
+  function tick() {
+    if (!v.paused && !v.ended && v.readyState >= 2) {
+      if (!m) measure();
+      var c = clipFor(v.currentTime);
+      if (c !== last) { name.style.clipPath = c; name.style.webkitClipPath = c; last = c; }
+      if (settled && !hero.classList.contains('name-live')) live();
+    }
+    requestAnimationFrame(tick);
+  }
+  fetch('video/hero-beams.json').then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) { data = d; }, function () {})
+    .then(function () { settled = true; });
+  window.addEventListener('resize', function () { m = null; });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { m = null; });
+  setTimeout(function () { if (v.paused) live(); }, 3000);     // video not playing (for example a phone saving power): just show the name
+  requestAnimationFrame(tick);
 })();
 </script>
 <script>
