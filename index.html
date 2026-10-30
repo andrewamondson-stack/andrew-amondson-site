@@ -1238,8 +1238,8 @@
   </button>
 
   <section class="hero">
-    <video autoplay muted loop playsinline preload="auto" poster="images/hero-poster.jpg">
-      <source src="video/hero-forest-cathedral-loop.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline preload="auto" poster="images/hero-poster-v2.jpg">
+      <source src="video/hero-loop-v2.mp4" type="video/mp4">
     </video>
     <div class="hero-fade" aria-hidden="true"></div>
 
@@ -2345,7 +2345,7 @@
     }
     requestAnimationFrame(tick);
   }
-  fetch('video/hero-beams.json').then(function (r) { return r.ok ? r.json() : null; })
+  fetch('video/hero-beams-v2.json').then(function (r) { return r.ok ? r.json() : null; })
     .then(function (d) { data = d; }, function () {})
     .then(function () { settled = true; });
   window.addEventListener('resize', function () { m = null; });
