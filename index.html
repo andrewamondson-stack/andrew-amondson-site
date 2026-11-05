@@ -1281,13 +1281,6 @@
             <img loading="lazy" decoding="async" class="fg" src="images/forest-cathedral-barn-roof.jpg" alt="Wide view of the barn's timber roof canopy hung with mirrored mobiles">
           </div>
 
-          <div class="slide text-card">
-            <div>
-              <p>"Transcendent."</p>
-              <p class="attrib attrib-sm">&ndash; Messums Visitor</p>
-            </div>
-          </div>
-
           <div class="slide">
             <img loading="lazy" decoding="async" class="bg" src="images/forest-cathedral-visitor-looking-up.jpg" alt="">
             <img loading="lazy" decoding="async" class="fg" src="images/forest-cathedral-visitor-looking-up.jpg" alt="A visitor looking up at the mobiles, shadows cast across the stone wall">
@@ -1313,13 +1306,6 @@
             <img loading="lazy" decoding="async" class="fg" src="images/forest-cathedral-reflection-session-1.jpg" alt="Visitors reclining in warm light during a reflection session">
           </div>
 
-          <div class="slide text-card">
-            <div>
-              <p>"Extraordinarily Peaceful &amp; Introspective."</p>
-              <p class="attrib">&ndash; Messums Visitor</p>
-            </div>
-          </div>
-
           <div class="slide">
             <img loading="lazy" decoding="async" class="bg" src="images/forest-cathedral-green-light.jpg" alt="">
             <img loading="lazy" decoding="async" class="fg" src="images/forest-cathedral-green-light.jpg" alt="A visitor standing in green light beneath the mobiles">
@@ -1333,13 +1319,6 @@
           <div class="slide">
             <img loading="lazy" decoding="async" class="bg" src="images/forest-cathedral-single-beam.jpg" alt="">
             <img loading="lazy" decoding="async" class="fg" src="images/forest-cathedral-single-beam.jpg" alt="A visitor standing inside a single beam of light">
-          </div>
-
-          <div class="slide text-card">
-            <div>
-              <p>"If churches were like this, I would go more often."</p>
-              <p class="attrib">&ndash; Messums Visitor</p>
-            </div>
           </div>
 
           <div class="slide">
@@ -1507,7 +1486,7 @@
           <div class="slide">
             <img loading="lazy" decoding="async" class="bg" src="images/wondering-ways/wondering-ways-video-poster.jpg" alt="">
             <video class="fg-video" playsinline preload="metadata" poster="images/wondering-ways/wondering-ways-video-poster.jpg" data-continue-play="true">
-              <source src="video/wondering-ways.mp4" type="video/mp4">
+              <source src="video/wondering-ways-v2.mp4" type="video/mp4">
             </video>
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
           </div>
@@ -1662,7 +1641,7 @@
           <div class="slide">
             <img loading="lazy" decoding="async" class="bg" src="images/living-tree/living-tree-film-poster.jpg" alt="">
             <video class="fg-video" playsinline preload="metadata" poster="images/living-tree/living-tree-film-poster.jpg" aria-label="Film of the Living Tree Forest Mirror Maze at The Egg, Bath">
-              <source src="video/living-tree-film.mp4" type="video/mp4">
+              <source src="video/living-tree-film-v2.mp4" type="video/mp4">
             </video>
             <button class="sound-btn" aria-label="Tap for sound" hidden>tap for sound</button>
           </div>
@@ -2031,9 +2010,16 @@
         var video = slide.querySelector('video.fg-video');
         var cta = slide.querySelector('.post-video-cta');
         if (!video || !cta) return;
-        video.addEventListener('ended', function () {
+        function showCta() {
           cta.hidden = false;
           cta.classList.add('visible');
+        }
+        video.addEventListener('ended', showCta);
+        // Some browsers are late or silent about "ended": also show it in the film's last moments.
+        video.addEventListener('timeupdate', function () {
+          if (!video.duration) return;
+          if (video.currentTime >= video.duration - 0.3) showCta();
+          else if (video.currentTime < video.duration - 1.5 && !cta.hidden) { cta.classList.remove('visible'); cta.hidden = true; }   // replaying: the link steps aside
         });
       });
     });
